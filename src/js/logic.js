@@ -39,7 +39,7 @@ class Project {
   }
 }
 
-class ProjectManager {
+export class ProjectManager {
   static #projectStorage = [];
 
   static addProject(name) {
