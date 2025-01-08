@@ -1,26 +1,5 @@
-class Todo {
-    constructor(title, description, dueDate, priority) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-    }
+import { ProjectManager, projectCreateDiv } from "./barrel.js";
 
-    editTodo(title, description, dueDate, priority) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-    }
-}
+ProjectManager.addProject("danilo");
 
-class Project extends Todo {
-    constructor(name) {
-        this.name = name;
-    }
-
-    #
-    todoStorage = []
-
-    addTodo(title, description, dueDate, priority) {}
-}
+projectCreateDiv(ProjectManager.showStorage());
