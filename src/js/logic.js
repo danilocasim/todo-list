@@ -21,7 +21,7 @@ class Project {
     this.name = name;
   }
 
-  addTask(title, description, dueDate, priority) {
+  addTodo(title, description, dueDate, priority) {
     this.#todoStorage.push(new Todo(title, description, dueDate, priority));
   }
 
@@ -29,7 +29,7 @@ class Project {
     return this.#todoStorage;
   }
 
-  editTask(index, newTitle, newDescription, newDueDate, newPriority) {
+  editTodo(index, newTitle, newDescription, newDueDate, newPriority) {
     this.#todoStorage[index].editTodo(
       newTitle,
       newDescription,
@@ -46,7 +46,7 @@ export class ProjectManager {
     this.#projectStorage.push(new Project(name));
   }
 
-  static showStorage() {
+  static showProjectStorage() {
     return this.#projectStorage;
   }
 

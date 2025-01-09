@@ -1,14 +1,27 @@
-import { ProjectManager, projectCreateDiv, showTodoList } from "./barrel.js";
+import { ProjectManager, projectCreateBtn, showTodoList } from "./barrel.js";
 
-const addProjectbtn = document.createElement("button");
-
-addProjectbtn.textContent = "Add Project ";
-addProjectbtn.addEventListener("click", () => {
-  ProjectManager.addProject(prompt("Name of project"));
-
-  projectCreateDiv(ProjectManager.showStorage());
+const createProject = document.createElement("button");
+createProject.textContent = "Create Project";
+createProject.addEventListener("click", () => {
+  const projectName = prompt("Project?");
+  ProjectManager.addProject(projectName);
+  projectCreateBtn(ProjectManager.showProjectStorage());
 });
+document.body.appendChild(createProject);
 
-document.body.appendChild(addProjectbtn);
+// show all todo
+function renderAllTodo() {
+  ProjectManager.showProjectStorage().forEach((project) => {
+    project.getTodoStorage().forEach((todo) => {
+      showTodoList(todo);
+      console.log(todo);
+    });
+  });
+}
 
-//add task
+function renderTodo(project) {
+  project.getTodoStorage().forEach((todo) => {
+    console.log(project.name);
+    showTodoList(todo);
+  });
+}

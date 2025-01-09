@@ -1,8 +1,14 @@
-export function projectCreateDiv(projects) {
-  const projectDiv = document.createElement("button");
-  projectDiv.style.display = "block";
-  projectDiv.classList.add("project");
+export function projectCreateBtn(projects) {
+  const oldProjects = document.querySelectorAll(".project");
+
+  oldProjects.forEach((project) => {
+    project.remove();
+  });
+
   for (const project of projects) {
+    const projectDiv = document.createElement("button");
+    projectDiv.style.display = "block";
+    projectDiv.classList.add("project");
     projectDiv.textContent += project.name;
     projectDiv.dataset.projectName = project.name;
     document.body.appendChild(projectDiv);
