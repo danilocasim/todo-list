@@ -1,7 +1,14 @@
-import { ProjectManager, projectCreateDiv } from "./barrel.js";
+import { ProjectManager, projectCreateDiv, showTodoList } from "./barrel.js";
 
-ProjectManager.addProject("danilo");
-ProjectManager.addProject("danilo");
-ProjectManager.addProject("danilo");
+const addProjectbtn = document.createElement("button");
 
-projectCreateDiv(ProjectManager.showStorage());
+addProjectbtn.textContent = "Add Project ";
+addProjectbtn.addEventListener("click", () => {
+  ProjectManager.addProject(prompt("Name of project"));
+
+  projectCreateDiv(ProjectManager.showStorage());
+});
+
+document.body.appendChild(addProjectbtn);
+
+//add task
