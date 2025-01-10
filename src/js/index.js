@@ -1,13 +1,39 @@
-import { ProjectManager, projectCreateBtn, showTodoList } from "./barrel.js";
+import {
+  ProjectManager,
+  renderProjects,
+  showTodoList,
+  clearOldElement,
+  addTaskBtn,
+  renderTodo,
+  createProjectBtn,
+  addTaskListener,
+  deleteProjectBtn,
+} from "./barrel.js";
 
-const createProject = document.createElement("button");
-createProject.textContent = "Create Project";
+//create proj button
+createProjectBtn();
+const createProject = document.querySelector(".create-project-btn");
+
 createProject.addEventListener("click", () => {
   const projectName = prompt("Project?");
   ProjectManager.addProject(projectName);
-  projectCreateBtn(ProjectManager.showProjectStorage());
+  renderProjects(ProjectManager.showProjectStorage());
+
+  deleteProject();
+
+  // fetch project's todo
+  const allProject = document.querySelectorAll(".project");
+  allProject.forEach((project, index) => {
+    project.addEventListener("click", (e) => {
+      addTodoBtn(ProjectManager.accessProject(index));
+      console.log(allProject);
+
+      //remove old todo wrapper
+      clearOldElement(".todo-wrapper");
+      renderTodo(ProjectManager.accessProject(index), showTodoList);
+    });
+  });
 });
-document.body.appendChild(createProject);
 
 // show all todo
 function renderAllTodo() {
@@ -19,9 +45,18 @@ function renderAllTodo() {
   });
 }
 
-function renderTodo(project) {
-  project.getTodoStorage().forEach((todo) => {
-    console.log(project.name);
-    showTodoList(todo);
+function addTodoBtn(project) {
+  clearOldElement(".add-task");
+  addTaskBtn();
+  addTaskListener(project, clearOldElement, renderTodo, showTodoList);
+}
+
+function deleteProject() {
+  deleteProjectBtn();
+  const deleteProjectButtons = document.querySelectorAll(".remove-project");
+  deleteProjectButtons.forEach((button, index) => {
+    button.addEventListener("click", (e) => {
+      console.log(index);
+    });
   });
 }
