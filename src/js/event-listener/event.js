@@ -1,8 +1,7 @@
 export function addTaskListener(
   project,
   clearOldElementCallback,
-  renderTodoCallback,
-  showTodoCallback
+  renderTodoCallback
 ) {
   const addTask = document.querySelector(".add-task");
 
@@ -13,7 +12,8 @@ export function addTaskListener(
     const priority = prompt("Priority");
     project.addTodo(title, description, dueDate, priority);
     //remove old todo wrapper
-    clearOldElementCallback(".todo-wrapper");
-    renderTodoCallback(project, showTodoCallback);
+    clearOldElementCallback(".project-todo");
+
+    renderTodoCallback(project);
   });
 }

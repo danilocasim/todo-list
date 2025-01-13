@@ -1,14 +1,11 @@
-import { ids } from "webpack";
 import {
   ProjectManager,
   renderProjects,
-  showTodoList,
   clearOldElement,
   addTaskBtn,
   renderTodo,
   createProjectBtn,
   addTaskListener,
-  deleteProjectBtn,
 } from "./barrel.js";
 
 //create proj button
@@ -26,24 +23,17 @@ createProject.addEventListener("click", () => {
   delBtn.style.display = "block";
   delBtn.addEventListener("click", (e) => {
     const allDelBtn = document.querySelectorAll(".remove-project");
-    const todoList = document.querySelectorAll(".todo-wrapper");
+    const projectTodo = document.querySelector(".project-todo");
     allDelBtn.forEach((btn, index) => {
       if (e.target == btn) {
         const addTask = document.querySelector(".add-task");
 
-        if (
-          addTask &&
-          addTask.dataset.projectName ==
-            ProjectManager.accessProject(index).name
-        ) {
+        if (addTask) {
           addTask.remove();
         }
 
-        if (
-          ProjectManager.accessProject(index).name ==
-          todoList[index].dataset.projectName
-        ) {
-          todoList[index].remove();
+        if (projectTodo) {
+          projectTodo[index].remove();
         }
         ProjectManager.showProjectStorage().splice(index, 1);
         renderProjects(ProjectManager.showProjectStorage());
@@ -63,8 +53,28 @@ body.addEventListener("click", (e) => {
         addTodoBtn(ProjectManager.accessProject(index), project);
         console.log(index);
         //remove old  todo wrapper
-        clearOldElement(".todo-wrapper");
-        renderTodo(ProjectManager.accessProject(index), showTodoList);
+        clearOldElement(".project-todo");
+        renderTodo(ProjectManager.accessProject(index));
+      }
+    });
+  } else if (e.target.classList.value == "remove-todo") {
+    const allRemoveTodoBtn = document.querySelectorAll(".remove-todo");
+    const todoWrapper = document.querySelectorAll(".todo-wrapper");
+
+    allRemoveTodoBtn.forEach((button, index) => {
+      if (e.target == button) {
+        if (todoWrapper[index]) {
+          todoWrapper[index].remove();
+          button.remove();
+
+          ProjectManager.accessProject(
+            ProjectManager.showProjectStorage().findIndex((project) => {
+              return project.name == todoWrapper[index].dataset.projectName;
+            })
+          )
+            .getTodoStorage()
+            .splice(index, 1);
+        }
       }
     });
   }
@@ -74,7 +84,7 @@ body.addEventListener("click", (e) => {
 function renderAllTodo() {
   ProjectManager.showProjectStorage().forEach((project) => {
     project.getTodoStorage().forEach((todo) => {
-      showTodoList(todo);
+      // showTodoList(todo);
       console.log(todo);
     });
   });
@@ -82,17 +92,7 @@ function renderAllTodo() {
 
 function addTodoBtn(project) {
   clearOldElement(".add-task");
-  addTaskBtn(project);
-  addTaskListener(project, clearOldElement, renderTodo, showTodoList);
-}
 
-function deleteProject() {
-  deleteProjectBtn();
-  const deleteProjectButtons = document.querySelectorAll(".remove-project");
-  deleteProjectButtons.forEach((button, index) => {
-    button.addEventListener("click", (e) => {
-      console.log(index);
-      console.log(deleteProjectButtons);
-    });
-  });
+  addTaskBtn(project);
+  addTaskListener(project, clearOldElement, renderTodo);
 }
