@@ -9,6 +9,6 @@ export function clearOldElement(cl) {
 export function renderTodo(project, callback) {
   project.getTodoStorage().forEach((todo) => {
     console.log(project.name);
-    callback(todo);
+    callback(todo, project);
   });
 }

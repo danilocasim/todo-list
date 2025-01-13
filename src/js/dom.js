@@ -15,17 +15,18 @@ export function renderProjects(projects) {
   }
 }
 
-export function showTodoList(project) {
+export function showTodoList(todo, project) {
   const todoWrapper = document.createElement("div");
   todoWrapper.classList.add("todo-wrapper");
+  todoWrapper.dataset.projectName = project.name;
   const title = document.createElement("p");
-  title.textContent = project.title;
+  title.textContent = todo.title;
   const description = document.createElement("p");
-  description.textContent = project.description;
+  description.textContent = todo.description;
   const dueDate = document.createElement("p");
-  dueDate.textContent = project.dueDate;
+  dueDate.textContent = todo.dueDate;
   const priority = document.createElement("p");
-  priority.textContent = project.priority;
+  priority.textContent = todo.priority;
 
   todoWrapper.appendChild(title);
   todoWrapper.appendChild(description);
@@ -35,10 +36,11 @@ export function showTodoList(project) {
   document.body.appendChild(todoWrapper);
 }
 
-export function addTaskBtn() {
+export function addTaskBtn(project) {
   const addTask = document.createElement("button");
   addTask.classList.add("add-task");
   addTask.textContent = "Add task";
+  addTask.dataset.projectName = project.name;
   document.body.appendChild(addTask);
 }
 

@@ -5,6 +5,7 @@ export function addTaskListener(
   showTodoCallback
 ) {
   const addTask = document.querySelector(".add-task");
+
   addTask.addEventListener("click", () => {
     const title = prompt("Title");
     const description = prompt("Description");

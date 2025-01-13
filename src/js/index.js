@@ -19,16 +19,29 @@ createProject.addEventListener("click", () => {
   ProjectManager.addProject(projectName);
   renderProjects(ProjectManager.showProjectStorage());
 
-  deleteProject();
+  const delBtn = document.createElement("button");
+  delBtn.textContent = "delete";
+  delBtn.classList.add("remove-project");
+  delBtn.style.display = "block";
+  delBtn.addEventListener("click", (e) => {
+    const allDelBtn = document.querySelectorAll(".remove-project");
+    allDelBtn.forEach((btn, index) => {
+      if (e.target == btn) {
+        ProjectManager.showProjectStorage().splice(index, 1);
+        renderProjects(ProjectManager.showProjectStorage());
+        allDelBtn[index].remove();
+      }
+    });
+  });
+  document.body.appendChild(delBtn);
 
   // fetch project's todo
   const allProject = document.querySelectorAll(".project");
   allProject.forEach((project, index) => {
     project.addEventListener("click", (e) => {
-      addTodoBtn(ProjectManager.accessProject(index));
-      console.log(allProject);
-
-      //remove old todo wrapper
+      addTodoBtn(ProjectManager.accessProject(index), project);
+      console.log(index);
+      //remove old  todo wrapper
       clearOldElement(".todo-wrapper");
       renderTodo(ProjectManager.accessProject(index), showTodoList);
     });
@@ -47,7 +60,7 @@ function renderAllTodo() {
 
 function addTodoBtn(project) {
   clearOldElement(".add-task");
-  addTaskBtn();
+  addTaskBtn(project);
   addTaskListener(project, clearOldElement, renderTodo, showTodoList);
 }
 
@@ -57,6 +70,7 @@ function deleteProject() {
   deleteProjectButtons.forEach((button, index) => {
     button.addEventListener("click", (e) => {
       console.log(index);
+      console.log(deleteProjectButtons);
     });
   });
 }
