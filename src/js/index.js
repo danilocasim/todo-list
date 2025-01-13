@@ -1,3 +1,4 @@
+import { ids } from "webpack";
 import {
   ProjectManager,
   renderProjects,
@@ -25,8 +26,25 @@ createProject.addEventListener("click", () => {
   delBtn.style.display = "block";
   delBtn.addEventListener("click", (e) => {
     const allDelBtn = document.querySelectorAll(".remove-project");
+    const todoList = document.querySelectorAll(".todo-wrapper");
     allDelBtn.forEach((btn, index) => {
       if (e.target == btn) {
+        const addTask = document.querySelector(".add-task");
+
+        if (
+          addTask &&
+          addTask.dataset.projectName ==
+            ProjectManager.accessProject(index).name
+        ) {
+          addTask.remove();
+        }
+
+        if (
+          ProjectManager.accessProject(index).name ==
+          todoList[index].dataset.projectName
+        ) {
+          todoList[index].remove();
+        }
         ProjectManager.showProjectStorage().splice(index, 1);
         renderProjects(ProjectManager.showProjectStorage());
         allDelBtn[index].remove();
@@ -34,18 +52,22 @@ createProject.addEventListener("click", () => {
     });
   });
   document.body.appendChild(delBtn);
+});
 
-  // fetch project's todo
-  const allProject = document.querySelectorAll(".project");
-  allProject.forEach((project, index) => {
-    project.addEventListener("click", (e) => {
-      addTodoBtn(ProjectManager.accessProject(index), project);
-      console.log(index);
-      //remove old  todo wrapper
-      clearOldElement(".todo-wrapper");
-      renderTodo(ProjectManager.accessProject(index), showTodoList);
+const body = document.body;
+body.addEventListener("click", (e) => {
+  if (e.target.classList.value == "project") {
+    const allProjects = document.querySelectorAll(".project");
+    allProjects.forEach((project, index) => {
+      if (e.target == project) {
+        addTodoBtn(ProjectManager.accessProject(index), project);
+        console.log(index);
+        //remove old  todo wrapper
+        clearOldElement(".todo-wrapper");
+        renderTodo(ProjectManager.accessProject(index), showTodoList);
+      }
     });
-  });
+  }
 });
 
 // show all todo
