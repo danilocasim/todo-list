@@ -11,6 +11,7 @@ export function renderProjects(projects) {
     const projectDiv = document.createElement("button");
     projectDiv.style.display = "block";
     projectDiv.classList.add("project");
+    projectDiv.style.backgroundColor = "skyblue";
     projectDiv.textContent += project.name;
     projectDiv.dataset.projectName = project.name;
     document.body.appendChild(projectDiv);
@@ -53,6 +54,7 @@ export function addTaskBtn(project) {
   const addTask = document.createElement("button");
   addTask.classList.add("add-task");
   addTask.textContent = "Add task";
+  addTask.style.backgroundColor = "green";
   addTask.dataset.projectName = project.name;
   document.body.appendChild(addTask);
 }

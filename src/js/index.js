@@ -21,6 +21,7 @@ createProject.addEventListener("click", () => {
   delBtn.textContent = "delete";
   delBtn.classList.add("remove-project");
   delBtn.style.display = "block";
+  delBtn.style.backgroundColor = "red";
   delBtn.addEventListener("click", (e) => {
     const allDelBtn = document.querySelectorAll(".remove-project");
     const projectTodo = document.querySelector(".project-todo");
