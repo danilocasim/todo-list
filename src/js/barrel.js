@@ -4,7 +4,13 @@ export {
   renderTodo,
   addTaskBtn,
   createProjectBtn,
+  removeProjectBtn,
 } from "./dom.js";
 export { clearOldElement } from "./helper.js";
 
-export { addTaskListener } from "./event-listener/event.js";
+export {
+  addTaskListener,
+  projectListener,
+  removeProjectListener,
+  removeTodoListener,
+} from "./event-listener/event.js";

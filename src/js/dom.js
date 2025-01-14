@@ -1,11 +1,9 @@
-export function renderProjects(projects) {
-  const oldProjects = document.querySelectorAll(".project");
+export function renderProjects(projects, clearOldElementCallback) {
+  clearOldElementCallback(".project");
+  clearOldElementCallback(".project-wrapper");
 
-  oldProjects.forEach((project) => {
-    project.remove();
-  });
-
-  // const projectWrapper = document.createElement("div");
+  const projectWrapper = document.createElement("div");
+  projectWrapper.classList.add("project-wrapper");
 
   for (const project of projects) {
     const projectDiv = document.createElement("button");
@@ -14,9 +12,9 @@ export function renderProjects(projects) {
     projectDiv.style.backgroundColor = "skyblue";
     projectDiv.textContent += project.name;
     projectDiv.dataset.projectName = project.name;
-    document.body.appendChild(projectDiv);
+    projectWrapper.appendChild(projectDiv);
   }
-  // document.body.appendChild(projectWrapper);
+  document.body.appendChild(projectWrapper);
 }
 
 export function renderTodo(project) {
@@ -65,4 +63,14 @@ export function createProjectBtn() {
   createProject.textContent = "Create Project";
   createProject.style.display = "block  ";
   document.body.appendChild(createProject);
+}
+
+export function removeProjectBtn(projectName) {
+  const delBtn = document.createElement("button");
+  delBtn.textContent = "delete";
+  delBtn.classList.add("remove-project");
+  delBtn.dataset.projectName = projectName;
+  delBtn.style.display = "block";
+  delBtn.style.backgroundColor = "red";
+  document.body.appendChild(delBtn);
 }

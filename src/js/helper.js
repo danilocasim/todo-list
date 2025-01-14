@@ -4,11 +4,3 @@ export function clearOldElement(cl) {
     el.remove();
   });
 }
-
-// first arg ProjectManager.accessProject(index)
-// export function renderTodo(project, callback) {
-//   project.getTodoStorage().forEach((todo) => {
-//     console.log(project.name);
-//     callback(todo, project);
-//   });
-// }
