@@ -8,8 +8,10 @@ import {
   addTaskListener,
   projectListener,
   removeProjectListener,
+  editTodoListener,
   removeTodoListener,
   removeProjectBtn,
+  isTodoCompleteListener,
 } from "./barrel.js";
 
 //create proj button
@@ -27,6 +29,8 @@ createProject.addEventListener("click", () => {
 
 projectListener(ProjectManager, addTodoBtn, clearOldElement, renderTodo);
 removeTodoListener(ProjectManager);
+editTodoListener(ProjectManager, clearOldElement, renderTodo);
+isTodoCompleteListener(ProjectManager);
 
 // show all todo
 function renderAllTodo() {

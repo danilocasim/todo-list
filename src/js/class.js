@@ -4,6 +4,7 @@ class Todo {
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
+    this.complete = false;
   }
 
   editTodo(newTitle, newDescription, newDueDate, newPriority) {
@@ -11,6 +12,10 @@ class Todo {
     this.description = newDescription;
     this.dueDate = newDueDate;
     this.priority = newPriority;
+  }
+
+  completeTodo() {
+    this.complete = this.complete == false ? true : false;
   }
 }
 
@@ -36,6 +41,10 @@ class Project {
       newDueDate,
       newPriority
     );
+  }
+
+  completeTodo(index) {
+    this.#todoStorage[index].completeTodo();
   }
 }
 

@@ -74,6 +74,52 @@ export function removeProjectListener(
   });
 }
 
+export function editTodoListener(
+  ProjectManagerClass,
+  clearOldElementCallback,
+  renderTodoCallback
+) {
+  const body = document.body;
+
+  body.addEventListener("click", (e) => {
+    if (e.target.classList.value == "edit-todo") {
+      const allEditTodoBtn = document.querySelectorAll(".edit-todo");
+      const todoWrapper = document.querySelectorAll(".todo-wrapper");
+
+      allEditTodoBtn.forEach((button, index) => {
+        if (e.target == button) {
+          if (todoWrapper[index]) {
+            clearOldElementCallback(".todo-wrapper");
+
+            const title = prompt("Title");
+            const description = prompt("Description");
+            const dueDate = prompt("Due date");
+            const priority = prompt("Priority");
+
+            ProjectManagerClass.accessProject(
+              ProjectManagerClass.showProjectStorage().findIndex((project) => {
+                return project.name == todoWrapper[index].dataset.projectName;
+              })
+            ).editTodo(index, title, description, dueDate, priority);
+
+            renderTodoCallback(
+              ProjectManagerClass.accessProject(
+                ProjectManagerClass.showProjectStorage().findIndex(
+                  (project) => {
+                    return (
+                      project.name == todoWrapper[index].dataset.projectName
+                    );
+                  }
+                )
+              )
+            );
+          }
+        }
+      });
+    }
+  });
+}
+
 export function removeTodoListener(ProjectManagerClass) {
   const body = document.body;
   body.addEventListener("click", (e) => {
@@ -94,6 +140,28 @@ export function removeTodoListener(ProjectManagerClass) {
             )
               .getTodoStorage()
               .splice(index, 1);
+          }
+        }
+      });
+    }
+  });
+}
+
+export function isTodoCompleteListener(ProjectManagerClass) {
+  const body = document.body;
+  body.addEventListener("click", (e) => {
+    if (e.target.classList.value == "complete-todo") {
+      const allIsCompleteTodoBtn = document.querySelectorAll(".complete-todo");
+      const todoWrapper = document.querySelectorAll(".todo-wrapper");
+
+      allIsCompleteTodoBtn.forEach((button, index) => {
+        if (e.target == button) {
+          if (todoWrapper[index]) {
+            ProjectManagerClass.accessProject(
+              ProjectManagerClass.showProjectStorage().findIndex((project) => {
+                return project.name == todoWrapper[index].dataset.projectName;
+              })
+            ).completeTodo(index);
           }
         }
       });

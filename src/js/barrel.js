@@ -13,4 +13,6 @@ export {
   projectListener,
   removeProjectListener,
   removeTodoListener,
+  editTodoListener,
+  isTodoCompleteListener,
 } from "./event-listener/event.js";

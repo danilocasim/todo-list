@@ -27,6 +27,7 @@ export function renderTodo(project) {
     todoWrapper.dataset.projectName = project.name;
     const title = document.createElement("p");
     title.textContent = todo.title;
+    title.classList.add("todo-title");
     const description = document.createElement("p");
     description.textContent = todo.description;
     const dueDate = document.createElement("p");
@@ -34,13 +35,24 @@ export function renderTodo(project) {
     const priority = document.createElement("p");
     priority.textContent = todo.priority;
 
+    const isTodoComplete = document.createElement("input");
+    isTodoComplete.checked = todo.complete;
+    isTodoComplete.setAttribute("type", "checkbox");
+    isTodoComplete.classList.add("complete-todo");
+
+    const editTodo = document.createElement("button");
+    editTodo.classList.add("edit-todo");
+    editTodo.textContent = "Edit Todo";
+
     const removeTodo = document.createElement("button");
     removeTodo.classList.add("remove-todo");
     removeTodo.textContent = "Delete Todo";
+    todoWrapper.appendChild(isTodoComplete);
     todoWrapper.appendChild(title);
     todoWrapper.appendChild(description);
     todoWrapper.appendChild(dueDate);
     todoWrapper.appendChild(priority);
+    todoWrapper.appendChild(editTodo);
     todoWrapper.appendChild(removeTodo);
 
     projectTodoList.appendChild(todoWrapper);
