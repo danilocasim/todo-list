@@ -37,7 +37,7 @@ isTodoImportantListener(ProjectManager);
 // show all todo
 function renderAllTodo() {
   ProjectManager.showProjectStorage().forEach((project) => {
-    renderTodo(project.getTodoStorage(), project.name);
+    renderTodo(project);
   });
 }
 
