@@ -13,6 +13,7 @@ import {
   removeProjectBtn,
   isTodoCompleteListener,
   isTodoImportantListener,
+  allTaskListener,
 } from "./barrel.js";
 
 //create proj button
@@ -33,6 +34,7 @@ removeTodoListener(ProjectManager);
 editTodoListener(ProjectManager, clearOldElement, renderTodo);
 isTodoCompleteListener(ProjectManager);
 isTodoImportantListener(ProjectManager);
+allTaskListener(clearOldElement, renderAllTodo);
 
 // show all todo
 function renderAllTodo() {
@@ -47,19 +49,8 @@ function addTodoBtn(project) {
   addTaskBtn(project);
   addTaskListener(project, clearOldElement, renderTodo);
 }
-// Render all todo
-const allTasks = document.createElement("button");
-allTasks.textContent = "All Tasks";
-
-allTasks.addEventListener("click", () => {
-  clearOldElement(".todo-wrapper");
-  renderAllTodo();
-});
-
-document.body.appendChild(allTasks);
 
 // filter all important
-
 const allImportant = document.createElement("button");
 allImportant.textContent = "Important";
 

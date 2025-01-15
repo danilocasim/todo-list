@@ -206,3 +206,18 @@ export function isTodoImportantListener(ProjectManagerClass) {
     }
   });
 }
+
+export function allTaskListener(
+  clearOldElementCallback,
+  renderAllTodoCallback
+) {
+  const allTasks = document.createElement("button");
+  allTasks.textContent = "All Tasks";
+
+  allTasks.addEventListener("click", () => {
+    clearOldElementCallback(".todo-wrapper");
+    renderAllTodoCallback();
+  });
+
+  document.body.appendChild(allTasks);
+}
