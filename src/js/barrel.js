@@ -15,4 +15,5 @@ export {
   removeTodoListener,
   editTodoListener,
   isTodoCompleteListener,
+  isTodoImportantListener,
 } from "./event-listener/event.js";

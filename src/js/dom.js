@@ -36,9 +36,18 @@ export function renderTodo(project) {
     priority.textContent = todo.priority;
 
     const isTodoComplete = document.createElement("input");
-    isTodoComplete.checked = todo.complete;
+    isTodoComplete.checked = todo.isComplete;
     isTodoComplete.setAttribute("type", "checkbox");
     isTodoComplete.classList.add("complete-todo");
+
+    todo.isComplete
+      ? (title.style.textDecoration = "line-through")
+      : title.style.removeProperty("text-decoration");
+
+    const isTodoImportant = document.createElement("input");
+    isTodoImportant.checked = todo.isImportant;
+    isTodoImportant.setAttribute("type", "checkbox");
+    isTodoImportant.classList.add("important-todo");
 
     const editTodo = document.createElement("button");
     editTodo.classList.add("edit-todo");
@@ -52,6 +61,7 @@ export function renderTodo(project) {
     todoWrapper.appendChild(description);
     todoWrapper.appendChild(dueDate);
     todoWrapper.appendChild(priority);
+    todoWrapper.appendChild(isTodoImportant);
     todoWrapper.appendChild(editTodo);
     todoWrapper.appendChild(removeTodo);
 

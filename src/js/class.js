@@ -4,7 +4,8 @@ class Todo {
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.complete = false;
+    this.isComplete = false;
+    this.isImportant = false;
   }
 
   editTodo(newTitle, newDescription, newDueDate, newPriority) {
@@ -14,8 +15,12 @@ class Todo {
     this.priority = newPriority;
   }
 
-  completeTodo() {
-    this.complete = this.complete == false ? true : false;
+  isCompleteTodo() {
+    this.isComplete = this.isComplete == false ? true : false;
+  }
+
+  isImportantTodo() {
+    this.isImportant = this.isImportant == false ? true : false;
   }
 }
 
@@ -43,8 +48,12 @@ class Project {
     );
   }
 
-  completeTodo(index) {
-    this.#todoStorage[index].completeTodo();
+  isCompleteTodo(index) {
+    this.#todoStorage[index].isCompleteTodo();
+  }
+
+  isImportantTodo(index) {
+    this.#todoStorage[index].isImportantTodo();
   }
 }
 

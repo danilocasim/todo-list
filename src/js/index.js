@@ -12,6 +12,7 @@ import {
   removeTodoListener,
   removeProjectBtn,
   isTodoCompleteListener,
+  isTodoImportantListener,
 } from "./barrel.js";
 
 //create proj button
@@ -31,14 +32,12 @@ projectListener(ProjectManager, addTodoBtn, clearOldElement, renderTodo);
 removeTodoListener(ProjectManager);
 editTodoListener(ProjectManager, clearOldElement, renderTodo);
 isTodoCompleteListener(ProjectManager);
+isTodoImportantListener(ProjectManager);
 
 // show all todo
 function renderAllTodo() {
   ProjectManager.showProjectStorage().forEach((project) => {
-    project.getTodoStorage().forEach((todo) => {
-      // showTodoList(todo);
-      console.log(todo);
-    });
+    renderTodo(project.getTodoStorage(), project.name);
   });
 }
 
@@ -48,3 +47,30 @@ function addTodoBtn(project) {
   addTaskBtn(project);
   addTaskListener(project, clearOldElement, renderTodo);
 }
+// Render all todo
+const allTasks = document.createElement("button");
+allTasks.textContent = "All Tasks";
+
+allTasks.addEventListener("click", () => {
+  clearOldElement(".todo-wrapper");
+  renderAllTodo();
+});
+
+document.body.appendChild(allTasks);
+
+// filter all important
+
+const allImportant = document.createElement("button");
+allImportant.textContent = "Important";
+
+allImportant.addEventListener("click", () => {
+  ProjectManager.showProjectStorage().forEach((project) => {
+    project.getTodoStorage().forEach((todo) => {
+      if (todo.isImportant) {
+        console.log(todo);
+      }
+    });
+  });
+});
+
+document.body.appendChild(allImportant);
