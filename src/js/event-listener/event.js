@@ -151,12 +151,6 @@ export function removeTodoListener(
 
             todoWrapper[index].remove();
             button.remove();
-
-            clearOldElementCallback(".project-todo");
-
-            ProjectManagerClass.showProjectStorage().forEach((project) => {
-              renderTodoCallback(project);
-            });
           }
         }
       });
