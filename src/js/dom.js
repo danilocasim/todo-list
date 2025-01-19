@@ -50,6 +50,7 @@ export function renderTodo(project) {
     isTodoImportant.classList.add("important-todo");
 
     const editTodo = document.createElement("button");
+
     editTodo.classList.add("edit-todo");
     editTodo.textContent = "Edit Todo";
 

@@ -86,10 +86,17 @@ export function editTodoListener(
       const allEditTodoBtn = document.querySelectorAll(".edit-todo");
       const todoWrapper = document.querySelectorAll(".todo-wrapper");
 
+      const editTodo = document.querySelectorAll(".edit-todo");
+
+      editTodo.forEach((button, index) => {
+        button.dataset.index = index;
+      });
+
       allEditTodoBtn.forEach((button, index) => {
         if (e.target == button) {
           if (todoWrapper[index]) {
             clearOldElementCallback(".todo-wrapper");
+            clearOldElementCallback(".project-todo");
 
             const title = prompt("Title");
             const description = prompt("Description");
@@ -100,7 +107,13 @@ export function editTodoListener(
               ProjectManagerClass.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
               })
-            ).editTodo(index, title, description, dueDate, priority);
+            ).editTodo(
+              button.dataset.index,
+              title,
+              description,
+              dueDate,
+              priority
+            );
 
             renderTodoCallback(
               ProjectManagerClass.accessProject(
@@ -215,6 +228,8 @@ export function allTaskListener(
   allTasks.textContent = "All Tasks";
 
   allTasks.addEventListener("click", () => {
+    clearOldElementCallback(".project-todo");
+
     clearOldElementCallback(".todo-wrapper");
     renderAllTodoCallback();
   });
