@@ -21,10 +21,11 @@ export function renderTodo(project) {
   const projectTodoList = document.createElement("div");
   projectTodoList.dataset.projectName = project.name;
   projectTodoList.classList.add("project-todo");
-  project.getTodoStorage().forEach((todo) => {
+  project.getTodoStorage().forEach((todo, index) => {
     const todoWrapper = document.createElement("div");
     todoWrapper.classList.add("todo-wrapper");
     todoWrapper.dataset.projectName = project.name;
+    todoWrapper.dataset.index = index;
     const title = document.createElement("p");
     title.textContent = todo.title;
     title.classList.add("todo-title");
@@ -52,7 +53,9 @@ export function renderTodo(project) {
     const editTodo = document.createElement("button");
 
     editTodo.classList.add("edit-todo");
+
     editTodo.textContent = "Edit Todo";
+    editTodo.dataset.projectName = project.name;
 
     const removeTodo = document.createElement("button");
     removeTodo.classList.add("remove-todo");

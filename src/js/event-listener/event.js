@@ -1,3 +1,5 @@
+import { renderTodo } from "../dom";
+
 export function addTaskListener(
   project,
   clearOldElementCallback,
@@ -86,12 +88,6 @@ export function editTodoListener(
       const allEditTodoBtn = document.querySelectorAll(".edit-todo");
       const todoWrapper = document.querySelectorAll(".todo-wrapper");
 
-      const editTodo = document.querySelectorAll(".edit-todo");
-
-      editTodo.forEach((button, index) => {
-        button.dataset.index = index;
-      });
-
       allEditTodoBtn.forEach((button, index) => {
         if (e.target == button) {
           if (todoWrapper[index]) {
@@ -108,7 +104,7 @@ export function editTodoListener(
                 return project.name == todoWrapper[index].dataset.projectName;
               })
             ).editTodo(
-              button.dataset.index,
+              todoWrapper[index].dataset.index,
               title,
               description,
               dueDate,
@@ -143,16 +139,16 @@ export function removeTodoListener(ProjectManagerClass) {
       allRemoveTodoBtn.forEach((button, index) => {
         if (e.target == button) {
           if (todoWrapper[index]) {
-            todoWrapper[index].remove();
-            button.remove();
-
             ProjectManagerClass.accessProject(
               ProjectManagerClass.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
               })
             )
               .getTodoStorage()
-              .splice(index, 1);
+              .splice(todoWrapper[index].dataset.index, 1);
+
+            todoWrapper[index].remove();
+            button.remove();
           }
         }
       });
@@ -175,7 +171,7 @@ export function isTodoCompleteListener(ProjectManagerClass) {
               ProjectManagerClass.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
               })
-            ).isCompleteTodo(index);
+            ).isCompleteTodo(todoWrapper[index].dataset.index);
 
             ProjectManagerClass.accessProject(
               ProjectManagerClass.showProjectStorage().findIndex((project) => {
@@ -205,14 +201,14 @@ export function isTodoImportantListener(ProjectManagerClass) {
             ProjectManagerClass.showProjectStorage().findIndex((project) => {
               return project.name == todoWrapper[index].dataset.projectName;
             })
-          ).isImportantTodo(index);
+          ).isImportantTodo(todoWrapper[index].dataset.index);
 
           console.log(
             ProjectManagerClass.accessProject(
               ProjectManagerClass.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
               })
-            ).getTodoStorage()[index].isImportant
+            ).getTodoStorage()[todoWrapper[index].dataset.index].isImportant
           );
         }
       });
