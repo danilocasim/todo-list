@@ -129,7 +129,11 @@ export function editTodoListener(
   });
 }
 
-export function removeTodoListener(ProjectManagerClass) {
+export function removeTodoListener(
+  ProjectManagerClass,
+  renderTodoCallback,
+  clearOldElementCallback
+) {
   const body = document.body;
   body.addEventListener("click", (e) => {
     if (e.target.classList.value == "remove-todo") {
@@ -149,6 +153,12 @@ export function removeTodoListener(ProjectManagerClass) {
 
             todoWrapper[index].remove();
             button.remove();
+
+            clearOldElementCallback(".project-todo");
+
+            ProjectManagerClass.showProjectStorage().forEach((project) => {
+              renderTodoCallback(project);
+            });
           }
         }
       });
