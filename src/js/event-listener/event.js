@@ -1,5 +1,3 @@
-import { renderTodo } from "../dom";
-
 export function addTaskListener(
   project,
   clearOldElementCallback,
@@ -212,14 +210,6 @@ export function isTodoImportantListener(ProjectManagerClass) {
               return project.name == todoWrapper[index].dataset.projectName;
             })
           ).isImportantTodo(todoWrapper[index].dataset.index);
-
-          console.log(
-            ProjectManagerClass.accessProject(
-              ProjectManagerClass.showProjectStorage().findIndex((project) => {
-                return project.name == todoWrapper[index].dataset.projectName;
-              })
-            ).getTodoStorage()[todoWrapper[index].dataset.index].isImportant
-          );
         }
       });
     }
