@@ -5,7 +5,7 @@ export function renderProjects(projects, clearOldElementCallback) {
   const projectWrapper = document.createElement("div");
   projectWrapper.classList.add("project-wrapper");
 
-  for (const project of projects) {
+  projects.forEach((project) => {
     const projectDiv = document.createElement("button");
     projectDiv.style.display = "block";
     projectDiv.classList.add("project");
@@ -13,13 +13,14 @@ export function renderProjects(projects, clearOldElementCallback) {
     projectDiv.textContent += project.name;
     projectDiv.dataset.projectName = project.name;
     projectWrapper.appendChild(projectDiv);
-  }
+  });
+
   document.body.appendChild(projectWrapper);
 }
 
 export function renderTodo(project) {
   const projectTodoList = document.createElement("div");
-  projectTodoList.dataset.projectName = project.name;
+
   projectTodoList.classList.add("project-todo");
   project.getTodoStorage().forEach((todo, index) => {
     const todoWrapper = document.createElement("div");
@@ -45,11 +46,6 @@ export function renderTodo(project) {
       ? (title.style.textDecoration = "line-through")
       : title.style.removeProperty("text-decoration");
 
-    const isTodoImportant = document.createElement("input");
-    isTodoImportant.checked = todo.isImportant;
-    isTodoImportant.setAttribute("type", "checkbox");
-    isTodoImportant.classList.add("important-todo");
-
     const editTodo = document.createElement("button");
 
     editTodo.classList.add("edit-todo");
@@ -65,7 +61,7 @@ export function renderTodo(project) {
     todoWrapper.appendChild(description);
     todoWrapper.appendChild(dueDate);
     todoWrapper.appendChild(priority);
-    todoWrapper.appendChild(isTodoImportant);
+
     todoWrapper.appendChild(editTodo);
     todoWrapper.appendChild(removeTodo);
 

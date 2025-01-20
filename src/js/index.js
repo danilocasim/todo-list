@@ -12,8 +12,6 @@ import {
   removeTodoListener,
   removeProjectBtn,
   isTodoCompleteListener,
-  isTodoImportantListener,
-  allTaskListener,
 } from "./barrel.js";
 
 //create proj button
@@ -25,16 +23,19 @@ createProject.addEventListener("click", () => {
   ProjectManager.addProject(projectName);
 
   removeProjectBtn(projectName);
-  removeProjectListener(ProjectManager, renderProjects, clearOldElement);
+  removeProjectListener(
+    ProjectManager,
+    renderProjects,
+    clearOldElement,
+    renderTodo
+  );
   renderProjects(ProjectManager.showProjectStorage(), clearOldElement);
 });
 
 projectListener(ProjectManager, addTodoBtn, clearOldElement, renderTodo);
-removeTodoListener(ProjectManager, renderAllTodo, clearOldElement);
+removeTodoListener(ProjectManager, renderTodo, clearOldElement);
 editTodoListener(ProjectManager, clearOldElement, renderTodo, renderAllTodo);
 isTodoCompleteListener(ProjectManager);
-isTodoImportantListener(ProjectManager);
-allTaskListener(clearOldElement, renderAllTodo);
 
 // show all todo
 function renderAllTodo() {
@@ -49,19 +50,3 @@ function addTodoBtn(project) {
   addTaskBtn(project);
   addTaskListener(project, clearOldElement, renderTodo);
 }
-
-// filter all important
-const allImportant = document.createElement("button");
-allImportant.textContent = "Important";
-
-allImportant.addEventListener("click", () => {
-  ProjectManager.showProjectStorage().forEach((project) => {
-    project.getTodoStorage().forEach((todo) => {
-      if (todo.isImportant) {
-        console.log(todo);
-      }
-    });
-  });
-});
-
-document.body.appendChild(allImportant);

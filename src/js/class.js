@@ -5,7 +5,6 @@ class Todo {
     this.dueDate = dueDate;
     this.priority = priority;
     this.isComplete = false;
-    this.isImportant = false;
   }
 
   editTodo(newTitle, newDescription, newDueDate, newPriority) {
@@ -17,10 +16,6 @@ class Todo {
 
   isCompleteTodo() {
     this.isComplete = this.isComplete == false ? true : false;
-  }
-
-  isImportantTodo() {
-    this.isImportant = this.isImportant == false ? true : false;
   }
 }
 
@@ -50,10 +45,6 @@ class Project {
 
   isCompleteTodo(index) {
     this.#todoStorage[index].isCompleteTodo();
-  }
-
-  isImportantTodo(index) {
-    this.#todoStorage[index].isImportantTodo();
   }
 }
 

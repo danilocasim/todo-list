@@ -15,6 +15,4 @@ export {
   removeTodoListener,
   editTodoListener,
   isTodoCompleteListener,
-  isTodoImportantListener,
-  allTaskListener,
 } from "./event-listener/event.js";

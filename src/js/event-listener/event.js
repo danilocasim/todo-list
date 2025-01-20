@@ -44,13 +44,15 @@ export function projectListener(
 export function removeProjectListener(
   ProjectManagerClass,
   renderProjectsCallback,
-  clearOldElementCallback
+  clearOldElementCallback,
+  renderTodoCallback
 ) {
   const deleteProjectButtons = document.querySelectorAll(".remove-project");
   deleteProjectButtons.forEach((delBtn) => {
     delBtn.addEventListener("click", (e) => {
       const allDelBtn = document.querySelectorAll(".remove-project");
       const projectTodo = document.querySelector(".project-todo");
+
       allDelBtn.forEach((btn, index) => {
         if (e.target == btn) {
           const addTask = document.querySelector(".add-task");
@@ -68,6 +70,10 @@ export function removeProjectListener(
             clearOldElementCallback
           );
           allDelBtn[index].remove();
+
+          if (ProjectManagerClass.showProjectStorage().length > 0) {
+            renderTodoCallback(ProjectManagerClass.accessProject(index - 1));
+          }
         }
       });
     });
@@ -77,8 +83,7 @@ export function removeProjectListener(
 export function editTodoListener(
   ProjectManagerClass,
   clearOldElementCallback,
-  renderTodoCallback,
-  renderAllTodoCallback
+  renderTodoCallback
 ) {
   const body = document.body;
 
@@ -109,29 +114,18 @@ export function editTodoListener(
               dueDate,
               priority
             );
-            let numOfAllTodo = 0;
 
-            ProjectManagerClass.showProjectStorage().forEach((project) => {
-              project.getTodoStorage().forEach((todo) => {
-                numOfAllTodo++;
-              });
-            });
-
-            if (todoWrapper.length == numOfAllTodo) {
-              renderAllTodoCallback();
-            } else {
-              renderTodoCallback(
-                ProjectManagerClass.accessProject(
-                  ProjectManagerClass.showProjectStorage().findIndex(
-                    (project) => {
-                      return (
-                        project.name == todoWrapper[index].dataset.projectName
-                      );
-                    }
-                  )
+            renderTodoCallback(
+              ProjectManagerClass.accessProject(
+                ProjectManagerClass.showProjectStorage().findIndex(
+                  (project) => {
+                    return (
+                      project.name == todoWrapper[index].dataset.projectName
+                    );
+                  }
                 )
-              );
-            }
+              )
+            );
           }
         }
       });
@@ -139,7 +133,11 @@ export function editTodoListener(
   });
 }
 
-export function removeTodoListener(ProjectManagerClass, renderAllTodoCallback) {
+export function removeTodoListener(
+  ProjectManagerClass,
+  renderTodoCallback,
+  clearOldElementCallback
+) {
   const body = document.body;
   body.addEventListener("click", (e) => {
     if (e.target.classList.value == "remove-todo") {
@@ -160,17 +158,19 @@ export function removeTodoListener(ProjectManagerClass, renderAllTodoCallback) {
             todoWrapper[index].remove();
             button.remove();
 
-            let numOfAllTodo = 0;
+            clearOldElementCallback(".project-todo");
 
-            ProjectManagerClass.showProjectStorage().forEach((project) => {
-              project.getTodoStorage().forEach((todo) => {
-                numOfAllTodo++;
-              });
-            });
-
-            if (todoWrapper.length == numOfAllTodo) {
-              renderAllTodoCallback();
-            }
+            renderTodoCallback(
+              ProjectManagerClass.accessProject(
+                ProjectManagerClass.showProjectStorage().findIndex(
+                  (project) => {
+                    return (
+                      project.name == todoWrapper[index].dataset.projectName
+                    );
+                  }
+                )
+              )
+            );
           }
         }
       });
@@ -211,42 +211,4 @@ export function isTodoCompleteListener(ProjectManagerClass) {
       });
     }
   });
-}
-
-export function isTodoImportantListener(ProjectManagerClass) {
-  const body = document.body;
-  body.addEventListener("click", (e) => {
-    if (e.target.classList.value == "important-todo") {
-      const allIsImportantTodoBtn =
-        document.querySelectorAll(".important-todo");
-      const todoWrapper = document.querySelectorAll(".todo-wrapper");
-
-      allIsImportantTodoBtn.forEach((button, index) => {
-        if (e.target == button) {
-          ProjectManagerClass.accessProject(
-            ProjectManagerClass.showProjectStorage().findIndex((project) => {
-              return project.name == todoWrapper[index].dataset.projectName;
-            })
-          ).isImportantTodo(todoWrapper[index].dataset.index);
-        }
-      });
-    }
-  });
-}
-
-export function allTaskListener(
-  clearOldElementCallback,
-  renderAllTodoCallback
-) {
-  const allTasks = document.createElement("button");
-  allTasks.textContent = "All Tasks";
-
-  allTasks.addEventListener("click", () => {
-    clearOldElementCallback(".project-todo");
-
-    clearOldElementCallback(".todo-wrapper");
-    renderAllTodoCallback();
-  });
-
-  document.body.appendChild(allTasks);
 }
