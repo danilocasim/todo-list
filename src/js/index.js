@@ -30,8 +30,8 @@ createProject.addEventListener("click", () => {
 });
 
 projectListener(ProjectManager, addTodoBtn, clearOldElement, renderTodo);
-removeTodoListener(ProjectManager, renderTodo, clearOldElement);
-editTodoListener(ProjectManager, clearOldElement, renderTodo);
+removeTodoListener(ProjectManager, renderAllTodo, clearOldElement);
+editTodoListener(ProjectManager, clearOldElement, renderTodo, renderAllTodo);
 isTodoCompleteListener(ProjectManager);
 isTodoImportantListener(ProjectManager);
 allTaskListener(clearOldElement, renderAllTodo);

@@ -77,7 +77,8 @@ export function removeProjectListener(
 export function editTodoListener(
   ProjectManagerClass,
   clearOldElementCallback,
-  renderTodoCallback
+  renderTodoCallback,
+  renderAllTodoCallback
 ) {
   const body = document.body;
 
@@ -108,18 +109,29 @@ export function editTodoListener(
               dueDate,
               priority
             );
+            let numOfAllTodo = 0;
 
-            renderTodoCallback(
-              ProjectManagerClass.accessProject(
-                ProjectManagerClass.showProjectStorage().findIndex(
-                  (project) => {
-                    return (
-                      project.name == todoWrapper[index].dataset.projectName
-                    );
-                  }
+            ProjectManagerClass.showProjectStorage().forEach((project) => {
+              project.getTodoStorage().forEach((todo) => {
+                numOfAllTodo++;
+              });
+            });
+
+            if (todoWrapper.length == numOfAllTodo) {
+              renderAllTodoCallback();
+            } else {
+              renderTodoCallback(
+                ProjectManagerClass.accessProject(
+                  ProjectManagerClass.showProjectStorage().findIndex(
+                    (project) => {
+                      return (
+                        project.name == todoWrapper[index].dataset.projectName
+                      );
+                    }
+                  )
                 )
-              )
-            );
+              );
+            }
           }
         }
       });
@@ -127,11 +139,7 @@ export function editTodoListener(
   });
 }
 
-export function removeTodoListener(
-  ProjectManagerClass,
-  renderTodoCallback,
-  clearOldElementCallback
-) {
+export function removeTodoListener(ProjectManagerClass, renderAllTodoCallback) {
   const body = document.body;
   body.addEventListener("click", (e) => {
     if (e.target.classList.value == "remove-todo") {
@@ -151,6 +159,18 @@ export function removeTodoListener(
 
             todoWrapper[index].remove();
             button.remove();
+
+            let numOfAllTodo = 0;
+
+            ProjectManagerClass.showProjectStorage().forEach((project) => {
+              project.getTodoStorage().forEach((todo) => {
+                numOfAllTodo++;
+              });
+            });
+
+            if (todoWrapper.length == numOfAllTodo) {
+              renderAllTodoCallback();
+            }
           }
         }
       });
@@ -179,9 +199,13 @@ export function isTodoCompleteListener(ProjectManagerClass) {
               ProjectManagerClass.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
               })
-            ).getTodoStorage()[index].isComplete
-              ? (allTitle[index].style.textDecoration = "line-through")
-              : allTitle[index].style.removeProperty("text-decoration");
+            ).getTodoStorage()[todoWrapper[index].dataset.index].isComplete
+              ? (allTitle[
+                  todoWrapper[index].dataset.index
+                ].style.textDecoration = "line-through")
+              : allTitle[todoWrapper[index].dataset.index].style.removeProperty(
+                  "text-decoration"
+                );
           }
         }
       });
