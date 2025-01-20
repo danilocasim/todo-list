@@ -45,7 +45,8 @@ export function removeProjectListener(
   ProjectManagerClass,
   renderProjectsCallback,
   clearOldElementCallback,
-  renderTodoCallback
+  renderTodoCallback,
+  addTaskBtnCallback
 ) {
   const deleteProjectButtons = document.querySelectorAll(".remove-project");
   deleteProjectButtons.forEach((delBtn) => {
@@ -73,6 +74,14 @@ export function removeProjectListener(
 
           if (ProjectManagerClass.showProjectStorage().length > 0) {
             renderTodoCallback(ProjectManagerClass.accessProject(index - 1));
+
+            addTaskBtnCallback(ProjectManagerClass.accessProject(index - 1));
+
+            addTaskListener(
+              ProjectManagerClass.accessProject(index - 1),
+              clearOldElementCallback,
+              renderTodoCallback
+            );
           }
         }
       });

@@ -96,3 +96,9 @@ export function removeProjectBtn(projectName) {
   delBtn.style.backgroundColor = "red";
   document.body.appendChild(delBtn);
 }
+
+export function navBar() {
+  const navigationDiv = document.createElement("div");
+  navigationDiv.classList.add("nav-bar");
+  document.body.appendChild(navigationDiv);
+}

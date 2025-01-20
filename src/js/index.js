@@ -1,3 +1,5 @@
+import style from "../css/style.css";
+
 import {
   ProjectManager,
   renderProjects,
@@ -12,8 +14,10 @@ import {
   removeTodoListener,
   removeProjectBtn,
   isTodoCompleteListener,
+  navBar,
 } from "./barrel.js";
 
+navBar();
 //create proj button
 createProjectBtn();
 const createProject = document.querySelector(".create-project-btn");
@@ -27,7 +31,8 @@ createProject.addEventListener("click", () => {
     ProjectManager,
     renderProjects,
     clearOldElement,
-    renderTodo
+    renderTodo,
+    addTaskBtn
   );
   renderProjects(ProjectManager.showProjectStorage(), clearOldElement);
 });
