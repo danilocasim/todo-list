@@ -15,6 +15,7 @@ import {
   removeProjectBtn,
   isTodoCompleteListener,
   navBar,
+  addTodoBtn,
 } from "./barrel.js";
 
 navBar();
@@ -37,21 +38,14 @@ createProject.addEventListener("click", () => {
   renderProjects(ProjectManager.showProjectStorage(), clearOldElement);
 });
 
-projectListener(ProjectManager, addTodoBtn, clearOldElement, renderTodo);
+projectListener(
+  ProjectManager,
+  addTodoBtn,
+  clearOldElement,
+  renderTodo,
+  addTaskBtn,
+  addTaskListener
+);
 removeTodoListener(ProjectManager, renderTodo, clearOldElement);
-editTodoListener(ProjectManager, clearOldElement, renderTodo, renderAllTodo);
+editTodoListener(ProjectManager, clearOldElement, renderTodo);
 isTodoCompleteListener(ProjectManager);
-
-// show all todo
-function renderAllTodo() {
-  ProjectManager.showProjectStorage().forEach((project) => {
-    renderTodo(project);
-  });
-}
-
-function addTodoBtn(project) {
-  clearOldElement(".add-task");
-
-  addTaskBtn(project);
-  addTaskListener(project, clearOldElement, renderTodo);
-}

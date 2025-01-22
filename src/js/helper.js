@@ -4,3 +4,15 @@ export function clearOldElement(cl) {
     el.remove();
   });
 }
+
+export function addTodoBtn(
+  project,
+  clearOldElementCallback,
+  addTaskBtnCallback,
+  addTaskListenerCallback,
+  renderTodoCallback
+) {
+  clearOldElementCallback(".add-task");
+  addTaskBtnCallback(project);
+  addTaskListenerCallback(project, clearOldElementCallback, renderTodoCallback);
+}

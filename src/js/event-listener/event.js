@@ -22,7 +22,9 @@ export function projectListener(
   ProjectManagerClass,
   addTodoBtnCallback,
   clearOldElementCallback,
-  renderTodoCallback
+  renderTodoCallback,
+  addTaskBtnCallback,
+  addTaskListenerCallback
 ) {
   const body = document.body;
   body.addEventListener("click", (e) => {
@@ -30,7 +32,13 @@ export function projectListener(
       const allProjects = document.querySelectorAll(".project");
       allProjects.forEach((project, index) => {
         if (e.target == project) {
-          addTodoBtnCallback(ProjectManagerClass.accessProject(index), project);
+          addTodoBtnCallback(
+            ProjectManagerClass.accessProject(index),
+            clearOldElementCallback,
+            addTaskBtnCallback,
+            addTaskListenerCallback,
+            renderTodoCallback
+          );
           console.log(index);
           //remove old  todo wrapper
           clearOldElementCallback(".project-todo");

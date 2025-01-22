@@ -7,7 +7,7 @@ export {
   removeProjectBtn,
   navBar,
 } from "./dom.js";
-export { clearOldElement } from "./helper.js";
+export { clearOldElement, addTodoBtn } from "./helper.js";
 
 export {
   addTaskListener,
