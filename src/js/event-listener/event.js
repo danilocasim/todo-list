@@ -56,16 +56,16 @@ export function removeProjectListener(
   renderTodoCallback,
   addTaskBtnCallback
 ) {
-  const deleteProjectButtons = document.querySelectorAll(".remove-project");
-  deleteProjectButtons.forEach((delBtn) => {
-    delBtn.addEventListener("click", (e) => {
-      const allDelBtn = document.querySelectorAll(".remove-project");
-      const projectTodo = document.querySelector(".project-todo");
+  const body = document.body;
 
-      allDelBtn.forEach((btn, index) => {
-        if (e.target == btn) {
+  body.addEventListener("click", (e) => {
+    if (e.target.classList.value == "remove-project") {
+      const deleteProjectButtons = document.querySelectorAll(".remove-project");
+      deleteProjectButtons.forEach((delBtn, index) => {
+        if (e.target == delBtn) {
+          const projectTodo = document.querySelector(".project-todo");
+
           const addTask = document.querySelector(".add-task");
-
           if (addTask) {
             addTask.remove();
           }
@@ -78,9 +78,12 @@ export function removeProjectListener(
             ProjectManagerClass.showProjectStorage(),
             clearOldElementCallback
           );
-          allDelBtn[index].remove();
+          delBtn.remove();
 
-          if (ProjectManagerClass.showProjectStorage().length > 0) {
+          if (
+            ProjectManagerClass.showProjectStorage().length > 0 &&
+            ProjectManagerClass.accessProject(index - 1) != null
+          ) {
             renderTodoCallback(ProjectManagerClass.accessProject(index - 1));
 
             addTaskBtnCallback(ProjectManagerClass.accessProject(index - 1));
@@ -91,9 +94,24 @@ export function removeProjectListener(
               renderTodoCallback
             );
           }
+          if (
+            ProjectManagerClass.showProjectStorage().length > 0 &&
+            ProjectManagerClass.accessProject(index - 1) == null &&
+            ProjectManagerClass.accessProject(index) != null
+          ) {
+            renderTodoCallback(ProjectManagerClass.accessProject(index));
+
+            addTaskBtnCallback(ProjectManagerClass.accessProject(index));
+
+            addTaskListener(
+              ProjectManagerClass.accessProject(index),
+              clearOldElementCallback,
+              renderTodoCallback
+            );
+          }
         }
       });
-    });
+    }
   });
 }
 

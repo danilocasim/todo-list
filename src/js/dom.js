@@ -1,3 +1,13 @@
+function removeProjectBtn(projectName, el) {
+  const delBtn = document.createElement("button");
+  delBtn.textContent = "delete";
+  delBtn.classList.add("remove-project");
+  delBtn.dataset.projectName = projectName;
+  delBtn.style.display = "block";
+  delBtn.style.backgroundColor = "red";
+  el.appendChild(delBtn);
+}
+
 export function renderProjects(projects, clearOldElementCallback) {
   clearOldElementCallback(".project");
   clearOldElementCallback(".project-wrapper");
@@ -6,13 +16,18 @@ export function renderProjects(projects, clearOldElementCallback) {
   projectWrapper.classList.add("project-wrapper");
 
   projects.forEach((project) => {
+    const wrapper = document.createElement("div");
+
     const projectDiv = document.createElement("button");
+    removeProjectBtn(project.name, wrapper);
     projectDiv.style.display = "block";
     projectDiv.classList.add("project");
     projectDiv.style.backgroundColor = "skyblue";
     projectDiv.textContent += project.name;
     projectDiv.dataset.projectName = project.name;
-    projectWrapper.appendChild(projectDiv);
+    wrapper.appendChild(projectDiv);
+
+    projectWrapper.appendChild(wrapper);
   });
 
   document.body.appendChild(projectWrapper);
@@ -85,16 +100,6 @@ export function createProjectBtn() {
   createProject.textContent = "Create Project";
   createProject.style.display = "block  ";
   document.body.appendChild(createProject);
-}
-
-export function removeProjectBtn(projectName) {
-  const delBtn = document.createElement("button");
-  delBtn.textContent = "delete";
-  delBtn.classList.add("remove-project");
-  delBtn.dataset.projectName = projectName;
-  delBtn.style.display = "block";
-  delBtn.style.backgroundColor = "red";
-  document.body.appendChild(delBtn);
 }
 
 export function navBar() {

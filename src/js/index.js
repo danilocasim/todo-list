@@ -12,7 +12,6 @@ import {
   removeProjectListener,
   editTodoListener,
   removeTodoListener,
-  removeProjectBtn,
   isTodoCompleteListener,
   navBar,
   addTodoBtn,
@@ -27,7 +26,8 @@ createProject.addEventListener("click", () => {
   const projectName = prompt("Project?");
   ProjectManager.addProject(projectName);
 
-  removeProjectBtn(projectName);
+  renderProjects(ProjectManager.showProjectStorage(), clearOldElement);
+
   removeProjectListener(
     ProjectManager,
     renderProjects,
@@ -35,7 +35,6 @@ createProject.addEventListener("click", () => {
     renderTodo,
     addTaskBtn
   );
-  renderProjects(ProjectManager.showProjectStorage(), clearOldElement);
 });
 
 projectListener(

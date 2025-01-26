@@ -4,7 +4,6 @@ export {
   renderTodo,
   addTaskBtn,
   createProjectBtn,
-  removeProjectBtn,
   navBar,
 } from "./dom.js";
 export { clearOldElement, addTodoBtn } from "./helper.js";
