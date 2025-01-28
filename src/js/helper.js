@@ -40,7 +40,8 @@ export function addDefaultProject(
     renderProjectsCallback,
     clearOldElementCallback,
     renderTodoCallback,
-    addTaskBtnCallback
+    addTaskBtnCallback,
+    imagePath
   );
 
   renderTodoCallback(

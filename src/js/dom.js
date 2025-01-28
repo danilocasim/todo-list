@@ -1,16 +1,13 @@
-function removeProjectBtn(projectName, el) {
-  const delBtn = document.createElement("button");
-  delBtn.textContent = "X";
+function removeProjectBtn(projectName, el, imagePath) {
+  const delBtn = document.createElement("img");
+  delBtn.src = imagePath;
   delBtn.classList.add("remove-project");
   delBtn.dataset.projectName = projectName;
-  delBtn.style.backgroundColor = "red";
-  delBtn.style.border = "none";
 
-  delBtn.style.width = "25px";
   el.appendChild(delBtn);
 }
 
-export function renderProjects(projects, clearOldElementCallback) {
+export function renderProjects(projects, clearOldElementCallback, imagePath) {
   clearOldElementCallback(".project");
   clearOldElementCallback(".project-wrapper");
 
@@ -23,8 +20,8 @@ export function renderProjects(projects, clearOldElementCallback) {
     const wrapper = document.createElement("div");
 
     const projectDiv = document.createElement("button");
-    removeProjectBtn(project.name, wrapper);
-    projectDiv.style.display = "block";
+    removeProjectBtn(project.name, wrapper, imagePath);
+
     projectDiv.classList.add("project");
 
     projectDiv.textContent += project.name;

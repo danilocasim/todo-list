@@ -100,16 +100,39 @@ body {
 .project-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   gap: 1rem;
+  width: 300px;
 }
 
-.project-wrapper * {
+.project-wrapper div {
   display: flex;
   flex-direction: row-reverse;
-  width: 250px;
-  border: 1px solid;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
   background-color: transparent;
   color: #6fffe9;
+  width: 100%;
+  border: 1px solid #1c2541;
+  padding: 0.5rem;
+}
+
+.project-wrapper div:hover {
+  background-color: #1c2541;
+}
+
+.project-wrapper button {
+  background-color: transparent;
+  border: none;
+  color: #6fffe9;
+  width: 100%;
+  cursor: pointer;
+}
+
+.remove-project {
+  width: 24px;
 }
 
 .hero-todo-container {

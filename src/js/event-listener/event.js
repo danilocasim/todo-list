@@ -54,7 +54,8 @@ export function removeProjectListener(
   renderProjectsCallback,
   clearOldElementCallback,
   renderTodoCallback,
-  addTaskBtnCallback
+  addTaskBtnCallback,
+  imagePath
 ) {
   const body = document.body;
 
@@ -76,7 +77,8 @@ export function removeProjectListener(
           ProjectManagerClass.showProjectStorage().splice(index, 1);
           renderProjectsCallback(
             ProjectManagerClass.showProjectStorage(),
-            clearOldElementCallback
+            clearOldElementCallback,
+            imagePath
           );
           delBtn.remove();
 
@@ -272,7 +274,9 @@ export function createProjectListener(
   renderProjectsCallback,
   clearOldElementCallback,
   renderTodoCallback,
-  addTaskBtnCallback
+  addTaskBtnCallback,
+  removeProjectListenerCallback,
+  imagePath
 ) {
   const createProject = document.querySelector(".create-project-btn");
 
@@ -282,15 +286,17 @@ export function createProjectListener(
 
     renderProjectsCallback(
       ProjectManagerClass.showProjectStorage(),
-      clearOldElementCallback
+      clearOldElementCallback,
+      imagePath
     );
 
-    removeProjectListener(
+    removeProjectListenerCallback(
       ProjectManagerClass,
       renderProjectsCallback,
       clearOldElementCallback,
       renderTodoCallback,
-      addTaskBtnCallback
+      addTaskBtnCallback,
+      imagePath
     );
 
     clearOldElementCallback(".project-todo");
