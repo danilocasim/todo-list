@@ -1,12 +1,13 @@
 import style from "../css/style.css";
 
+// import deleteBtn from "../assets/images/del-btn.png";
+
 import {
   ProjectManager,
   renderProjects,
   clearOldElement,
   addTaskBtn,
   renderTodo,
-  createProjectBtn,
   addTaskListener,
   projectListener,
   editTodoListener,
@@ -15,9 +16,22 @@ import {
   mainDOM,
   addTodoBtn,
   createProjectListener,
+  removeProjectListener,
+  addDefaultProject,
 } from "./barrel.js";
 
 mainDOM();
+
+addDefaultProject(
+  ProjectManager,
+  renderProjects,
+  clearOldElement,
+  removeProjectListener,
+  renderTodo,
+  addTaskBtn,
+  addTaskListener
+);
+
 //create proj button
 
 createProjectListener(

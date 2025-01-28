@@ -109,6 +109,11 @@ export function removeProjectListener(
               renderTodoCallback
             );
           }
+
+          if (ProjectManagerClass.showProjectStorage().length == 0) {
+            const projectName = document.querySelector(".project-name");
+            projectName.textContent = "No projects here";
+          }
         }
       });
     }
@@ -286,6 +291,34 @@ export function createProjectListener(
       clearOldElementCallback,
       renderTodoCallback,
       addTaskBtnCallback
+    );
+
+    clearOldElementCallback(".project-todo");
+    clearOldElementCallback(".add-task");
+    renderTodoCallback(
+      ProjectManagerClass.accessProject(
+        ProjectManagerClass.showProjectStorage().findIndex((project) => {
+          return project.name == projectName;
+        })
+      )
+    );
+
+    addTaskBtnCallback(
+      ProjectManagerClass.accessProject(
+        ProjectManagerClass.showProjectStorage().findIndex((project) => {
+          return project.name == projectName;
+        })
+      )
+    );
+
+    addTaskListener(
+      ProjectManagerClass.accessProject(
+        ProjectManagerClass.showProjectStorage().findIndex((project) => {
+          return project.name == projectName;
+        })
+      ),
+      clearOldElementCallback,
+      renderTodoCallback
     );
   });
 }

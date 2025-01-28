@@ -4,6 +4,7 @@ function removeProjectBtn(projectName, el) {
   delBtn.classList.add("remove-project");
   delBtn.dataset.projectName = projectName;
   delBtn.style.backgroundColor = "red";
+  delBtn.style.border = "none";
 
   delBtn.style.width = "25px";
   el.appendChild(delBtn);
@@ -25,7 +26,7 @@ export function renderProjects(projects, clearOldElementCallback) {
     removeProjectBtn(project.name, wrapper);
     projectDiv.style.display = "block";
     projectDiv.classList.add("project");
-    projectDiv.style.backgroundColor = "skyblue";
+
     projectDiv.textContent += project.name;
     projectDiv.dataset.projectName = project.name;
     wrapper.appendChild(projectDiv);

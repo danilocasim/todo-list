@@ -1,18 +1,13 @@
 export { ProjectManager } from "./class.js";
-export {
-  renderProjects,
-  renderTodo,
-  addTaskBtn,
-  createProjectBtn,
-  mainDOM,
-} from "./dom.js";
-export { clearOldElement, addTodoBtn } from "./helper.js";
+export { renderProjects, renderTodo, addTaskBtn, mainDOM } from "./dom.js";
+
+export { clearOldElement, addTodoBtn, addDefaultProject } from "./helper.js";
 
 export {
   addTaskListener,
   projectListener,
-  removeProjectListener,
   removeTodoListener,
+  removeProjectListener,
   editTodoListener,
   isTodoCompleteListener,
   createProjectListener,
