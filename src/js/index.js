@@ -9,33 +9,24 @@ import {
   createProjectBtn,
   addTaskListener,
   projectListener,
-  removeProjectListener,
   editTodoListener,
   removeTodoListener,
   isTodoCompleteListener,
-  navBar,
+  mainDOM,
   addTodoBtn,
+  createProjectListener,
 } from "./barrel.js";
 
-navBar();
+mainDOM();
 //create proj button
-createProjectBtn();
-const createProject = document.querySelector(".create-project-btn");
 
-createProject.addEventListener("click", () => {
-  const projectName = prompt("Project?");
-  ProjectManager.addProject(projectName);
-
-  renderProjects(ProjectManager.showProjectStorage(), clearOldElement);
-
-  removeProjectListener(
-    ProjectManager,
-    renderProjects,
-    clearOldElement,
-    renderTodo,
-    addTaskBtn
-  );
-});
+createProjectListener(
+  ProjectManager,
+  renderProjects,
+  clearOldElement,
+  renderTodo,
+  addTaskBtn
+);
 
 projectListener(
   ProjectManager,

@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "montserrat";
+  src: url("../assets/fonts/montserratalternates-regular-webfont.woff2")
+      format("woff2"),
+    url("../assets/fonts/montserratalternates-regular-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 *,
 *::before,
 *::after {
@@ -58,7 +68,81 @@ h6 {
 
 /* END OF CSS RESET */
 
-.nav-bar {
-  height: 80px;
+body {
+  font-family: "montserrat", system-ui, -apple-system, "Neue", sans-serif;
+}
+
+.container {
+  display: grid;
+
+  grid-template-columns: 1fr 4fr;
+
+  min-height: 100vh;
+}
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
   background-color: skyblue;
+}
+
+.logo {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+}
+.projects-header {
+  font-size: 2rem;
+}
+
+.project-wrapper {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.project-wrapper * {
+  display: flex;
+  flex-direction: row-reverse;
+  border: 1px solid;
+  width: 100%;
+}
+
+.hero-todo-container {
+  background-color: pink;
+  padding: 3rem 7rem;
+}
+
+.hero-todo-nav {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+}
+
+.project-name {
+  font-size: 3rem;
+}
+
+.project-todo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.todo-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 2px solid;
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }

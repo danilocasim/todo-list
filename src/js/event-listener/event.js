@@ -220,6 +220,7 @@ export function isTodoCompleteListener(ProjectManagerClass) {
       const allIsCompleteTodoBtn = document.querySelectorAll(".complete-todo");
       const todoWrapper = document.querySelectorAll(".todo-wrapper");
       const allTitle = document.querySelectorAll(".todo-title");
+      const allDate = document.querySelectorAll(".todo-date");
 
       allIsCompleteTodoBtn.forEach((button, index) => {
         if (e.target == button) {
@@ -230,20 +231,61 @@ export function isTodoCompleteListener(ProjectManagerClass) {
               })
             ).isCompleteTodo(todoWrapper[index].dataset.index);
 
-            ProjectManagerClass.accessProject(
-              ProjectManagerClass.showProjectStorage().findIndex((project) => {
-                return project.name == todoWrapper[index].dataset.projectName;
-              })
-            ).getTodoStorage()[todoWrapper[index].dataset.index].isComplete
-              ? (allTitle[
-                  todoWrapper[index].dataset.index
-                ].style.textDecoration = "line-through")
-              : allTitle[todoWrapper[index].dataset.index].style.removeProperty(
-                  "text-decoration"
-                );
+            if (
+              ProjectManagerClass.accessProject(
+                ProjectManagerClass.showProjectStorage().findIndex(
+                  (project) => {
+                    return (
+                      project.name == todoWrapper[index].dataset.projectName
+                    );
+                  }
+                )
+              ).getTodoStorage()[todoWrapper[index].dataset.index].isComplete
+            ) {
+              allTitle[todoWrapper[index].dataset.index].style.textDecoration =
+                "line-through";
+
+              allDate[todoWrapper[index].dataset.index].style.textDecoration =
+                "line-through";
+            } else {
+              allTitle[todoWrapper[index].dataset.index].style.removeProperty(
+                "text-decoration"
+              );
+              allDate[todoWrapper[index].dataset.index].style.removeProperty(
+                "text-decoration"
+              );
+            }
           }
         }
       });
     }
+  });
+}
+
+export function createProjectListener(
+  ProjectManagerClass,
+  renderProjectsCallback,
+  clearOldElementCallback,
+  renderTodoCallback,
+  addTaskBtnCallback
+) {
+  const createProject = document.querySelector(".create-project-btn");
+
+  createProject.addEventListener("click", () => {
+    const projectName = prompt("Project?");
+    ProjectManagerClass.addProject(projectName);
+
+    renderProjectsCallback(
+      ProjectManagerClass.showProjectStorage(),
+      clearOldElementCallback
+    );
+
+    removeProjectListener(
+      ProjectManagerClass,
+      renderProjectsCallback,
+      clearOldElementCallback,
+      renderTodoCallback,
+      addTaskBtnCallback
+    );
   });
 }

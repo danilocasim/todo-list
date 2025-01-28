@@ -4,7 +4,7 @@ export {
   renderTodo,
   addTaskBtn,
   createProjectBtn,
-  navBar,
+  mainDOM,
 } from "./dom.js";
 export { clearOldElement, addTodoBtn } from "./helper.js";
 
@@ -15,4 +15,5 @@ export {
   removeTodoListener,
   editTodoListener,
   isTodoCompleteListener,
+  createProjectListener,
 } from "./event-listener/event.js";
