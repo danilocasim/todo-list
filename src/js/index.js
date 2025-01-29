@@ -16,6 +16,8 @@ import {
   createProjectListener,
   removeProjectListener,
   addDefaultProject,
+  dialogProject,
+  dialogAddTodo,
 } from "./barrel.js";
 
 mainDOM();
@@ -27,10 +29,9 @@ addDefaultProject(
   removeProjectListener,
   renderTodo,
   addTaskBtn,
-  addTaskListener
+  addTaskListener,
+  dialogAddTodo
 );
-
-//create proj button
 
 createProjectListener(
   ProjectManager,
@@ -38,7 +39,9 @@ createProjectListener(
   clearOldElement,
   renderTodo,
   addTaskBtn,
-  removeProjectListener
+  removeProjectListener,
+  dialogProject,
+  dialogAddTodo
 );
 
 projectListener(
@@ -47,8 +50,9 @@ projectListener(
   clearOldElement,
   renderTodo,
   addTaskBtn,
-  addTaskListener
+  addTaskListener,
+  dialogAddTodo
 );
 removeTodoListener(ProjectManager, renderTodo, clearOldElement);
-editTodoListener(ProjectManager, clearOldElement, renderTodo);
+editTodoListener(ProjectManager, clearOldElement, renderTodo, dialogAddTodo);
 isTodoCompleteListener(ProjectManager);

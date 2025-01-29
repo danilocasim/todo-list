@@ -205,3 +205,186 @@ export function mainDOM() {
 
   document.body.appendChild(container);
 }
+
+export function dialogProject() {
+  const dialog = document.createElement("dialog");
+
+  dialog.classList.add("dialog-project");
+
+  const form = document.createElement("form");
+  form.setAttribute("method", "dialog");
+
+  const wrapper = document.createElement("div");
+
+  const closeBtn = document.createElement("div");
+
+  closeBtn.textContent = "X";
+
+  closeBtn.classList.add("close-dialog");
+
+  closeBtn.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  const label = document.createElement("label");
+  label.setAttribute("for", "projectName");
+  label.textContent = "Project Name";
+
+  const input = document.createElement("input");
+  input.setAttribute("type", "text");
+  input.setAttribute("id", "createdProjectName");
+  input.setAttribute("name", "projectName");
+  input.required = true;
+
+  wrapper.appendChild(label);
+  wrapper.appendChild(input);
+
+  const button = document.createElement("button");
+  button.setAttribute("type", "submit");
+  button.textContent = "Submit";
+
+  button.classList.add("submit-dialog-project");
+
+  form.appendChild(closeBtn);
+
+  form.appendChild(wrapper);
+  form.appendChild(button);
+
+  dialog.appendChild(form);
+
+  document.body.appendChild(dialog);
+}
+
+export function dialogAddTodo(
+  currentTitle = "",
+  currentDescription = "",
+  currentDueDate = "",
+  currentPriority = ""
+) {
+  const dialog = document.createElement("dialog");
+
+  dialog.classList.add("dialog-add-todo");
+
+  const form = document.createElement("form");
+  form.setAttribute("method", "dialog");
+
+  const closeBtn = document.createElement("div");
+
+  closeBtn.textContent = "X";
+
+  closeBtn.classList.add("close-dialog");
+
+  closeBtn.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  const wrapperTitle = document.createElement("div");
+
+  const labelTitle = document.createElement("label");
+  labelTitle.setAttribute("for", "title");
+  labelTitle.textContent = "Title";
+
+  const inputTitle = document.createElement("input");
+
+  inputTitle.value = currentTitle;
+
+  inputTitle.setAttribute("type", "text");
+  inputTitle.setAttribute("id", "title");
+  inputTitle.setAttribute("name", "title");
+  inputTitle.required = true;
+
+  wrapperTitle.appendChild(labelTitle);
+  wrapperTitle.appendChild(inputTitle);
+
+  const wrapperDescription = document.createElement("div");
+
+  const labelDescription = document.createElement("label");
+  labelDescription.setAttribute("for", "description");
+  labelDescription.textContent = "Description";
+
+  const inputDescription = document.createElement("input");
+
+  inputDescription.value = currentDescription;
+
+  inputDescription.setAttribute("type", "text");
+  inputDescription.setAttribute("id", "description");
+  inputDescription.setAttribute("name", "description");
+  inputDescription.required = true;
+
+  wrapperDescription.appendChild(labelDescription);
+  wrapperDescription.appendChild(inputDescription);
+
+  const wrapperDueDate = document.createElement("div");
+
+  const labelDueDate = document.createElement("label");
+  labelDueDate.setAttribute("for", "dueDate");
+  labelDueDate.textContent = "Due Date";
+
+  const inputDueDate = document.createElement("input");
+
+  inputDueDate.value = currentDueDate;
+  inputDueDate.setAttribute("type", "date");
+  inputDueDate.setAttribute("id", "dueDate");
+  inputDueDate.setAttribute("name", "dueDate");
+  inputDueDate.required = true;
+
+  wrapperDueDate.appendChild(labelDueDate);
+  wrapperDueDate.appendChild(inputDueDate);
+
+  const wrapperPriority = document.createElement("div");
+
+  const labelPriority = document.createElement("label");
+  labelPriority.setAttribute("for", "priority");
+  labelPriority.textContent = "Priority";
+
+  const selectPriority = document.createElement("select");
+
+  selectPriority.setAttribute("id", "priority");
+  selectPriority.setAttribute("name", "priority");
+  selectPriority.required = true;
+
+  const high = document.createElement("option");
+  high.value = "high";
+  high.textContent = "High";
+  const medium = document.createElement("option");
+  medium.value = "medium";
+  medium.textContent = "Medium";
+
+  const low = document.createElement("option");
+  low.value = "low";
+  low.textContent = "Low";
+
+  if (currentPriority == "high") {
+    high.selected = true;
+  } else if (currentPriority == "medium") {
+    medium.selected = true;
+  } else if (currentPriority == "low") {
+    low.selected = true;
+  }
+
+  selectPriority.appendChild(high);
+  selectPriority.appendChild(medium);
+
+  selectPriority.appendChild(low);
+
+  wrapperPriority.appendChild(labelPriority);
+  wrapperPriority.appendChild(selectPriority);
+
+  const button = document.createElement("button");
+  button.setAttribute("type", "submit");
+  button.textContent = "Submit";
+
+  button.classList.add("submit-dialog-project");
+
+  form.appendChild(closeBtn);
+
+  form.appendChild(wrapperTitle);
+  form.appendChild(wrapperDescription);
+  form.appendChild(wrapperDueDate);
+  form.appendChild(wrapperPriority);
+  form.appendChild(button);
+
+  dialog.appendChild(form);
+
+  document.body.appendChild(dialog);
+}

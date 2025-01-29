@@ -221,5 +221,65 @@ body {
 .date-btn-wrapper {
   display: flex;
   align-items: center;
-  gap: 24rem;
+  gap: 15rem;
+}
+
+.dialog-project,
+.dialog-add-todo {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #0b132b;
+  color: #6fffe9;
+}
+
+.dialog-project {
+  height: 25vh;
+  width: 25vw;
+}
+.dialog-add-todo {
+  height: 45vh;
+  width: 40vw;
+}
+
+.dialog-project form,
+.dialog-add-todo form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.close-dialog {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  color: #6fffe9;
+  cursor: pointer;
+}
+
+.dialog-project label,
+.dialog-add-todo label {
+  display: block;
+}
+.dialog-project input,
+.dialog-add-todo input,
+.dialog-add-todo select {
+  appearance: none;
+  outline: none;
+  border: none;
+  width: 100%;
+  background-color: #1c2541;
+  color: #6fffe9;
+}
+
+.dialog-project input:focus,
+.dialog-add-todo input:focus {
+  border: 1px solid #6fffe9;
+}
+
+.submit-dialog-project {
+  background-color: #6fffe9;
+  border: none;
 }

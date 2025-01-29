@@ -10,11 +10,17 @@ export function addTodoBtn(
   clearOldElementCallback,
   addTaskBtnCallback,
   addTaskListenerCallback,
-  renderTodoCallback
+  renderTodoCallback,
+  dialogAddTodoCallback
 ) {
   clearOldElementCallback(".add-task");
   addTaskBtnCallback(project);
-  addTaskListenerCallback(project, clearOldElementCallback, renderTodoCallback);
+  addTaskListenerCallback(
+    project,
+    clearOldElementCallback,
+    renderTodoCallback,
+    dialogAddTodoCallback
+  );
 }
 
 export function addDefaultProject(
@@ -24,7 +30,8 @@ export function addDefaultProject(
   removeProjectListenerCallback,
   renderTodoCallback,
   addTaskBtnCallback,
-  addTaskListenerCallback
+  addTaskListenerCallback,
+  dialogAddTodoCallback
 ) {
   ProjectManagerClass.addProject("Default");
 
@@ -64,6 +71,7 @@ export function addDefaultProject(
       })
     ),
     clearOldElementCallback,
-    renderTodoCallback
+    renderTodoCallback,
+    dialogAddTodoCallback
   );
 }

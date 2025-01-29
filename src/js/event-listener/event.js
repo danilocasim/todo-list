@@ -1,20 +1,33 @@
 export function addTaskListener(
   project,
   clearOldElementCallback,
-  renderTodoCallback
+  renderTodoCallback,
+  dialogAddTodoCallback
 ) {
   const addTask = document.querySelector(".add-task");
 
   addTask.addEventListener("click", () => {
-    const title = prompt("Title");
-    const description = prompt("Description");
-    const dueDate = prompt("Due date");
-    const priority = prompt("Priority");
-    project.addTodo(title, description, dueDate, priority);
-    //remove old todo wrapper
-    clearOldElementCallback(".project-todo");
+    clearOldElementCallback("dialog");
+    dialogAddTodoCallback();
 
-    renderTodoCallback(project);
+    const dialog = document.querySelector(".dialog-add-todo");
+
+    dialog.showModal();
+
+    dialog.addEventListener("submit", () => {
+      const title = document.querySelector("#title").value;
+      const description = document.querySelector("#description").value;
+      const dueDate = document.querySelector("#dueDate").value;
+      const priority = document.querySelector("#priority").value;
+      project.addTodo(title, description, dueDate, priority);
+      //remove old todo wrapper
+      clearOldElementCallback(".project-todo");
+
+      renderTodoCallback(project);
+
+      const form = document.querySelector("form");
+      form.reset();
+    });
   });
 }
 
@@ -24,7 +37,8 @@ export function projectListener(
   clearOldElementCallback,
   renderTodoCallback,
   addTaskBtnCallback,
-  addTaskListenerCallback
+  addTaskListenerCallback,
+  dialogAddTodoCallback
 ) {
   const body = document.body;
   body.addEventListener("click", (e) => {
@@ -37,7 +51,8 @@ export function projectListener(
             clearOldElementCallback,
             addTaskBtnCallback,
             addTaskListenerCallback,
-            renderTodoCallback
+            renderTodoCallback,
+            dialogAddTodoCallback
           );
           console.log(index);
           //remove old  todo wrapper
@@ -125,7 +140,8 @@ export function removeProjectListener(
 export function editTodoListener(
   ProjectManagerClass,
   clearOldElementCallback,
-  renderTodoCallback
+  renderTodoCallback,
+  dialogAddTodoCallback
 ) {
   const body = document.body;
 
@@ -139,24 +155,79 @@ export function editTodoListener(
           if (todoWrapper[index]) {
             clearOldElementCallback(".todo-wrapper");
             clearOldElementCallback(".project-todo");
+            clearOldElementCallback("dialog");
 
-            const title = prompt("Title");
-            const description = prompt("Description");
-            const dueDate = prompt("Due date");
-            const priority = prompt("Priority");
-
-            ProjectManagerClass.accessProject(
+            const currentTitle = ProjectManagerClass.accessProject(
               ProjectManagerClass.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
               })
-            ).editTodo(
-              todoWrapper[index].dataset.index,
-              title,
-              description,
-              dueDate,
-              priority
+            ).getTodoStorage()[todoWrapper[index].dataset.index].title;
+
+            const currentDescription = ProjectManagerClass.accessProject(
+              ProjectManagerClass.showProjectStorage().findIndex((project) => {
+                return project.name == todoWrapper[index].dataset.projectName;
+              })
+            ).getTodoStorage()[todoWrapper[index].dataset.index].description;
+
+            const currentDueDate = ProjectManagerClass.accessProject(
+              ProjectManagerClass.showProjectStorage().findIndex((project) => {
+                return project.name == todoWrapper[index].dataset.projectName;
+              })
+            ).getTodoStorage()[todoWrapper[index].dataset.index].dueDate;
+
+            const currentPriority = ProjectManagerClass.accessProject(
+              ProjectManagerClass.showProjectStorage().findIndex((project) => {
+                return project.name == todoWrapper[index].dataset.projectName;
+              })
+            ).getTodoStorage()[todoWrapper[index].dataset.index].priority;
+
+            dialogAddTodoCallback(
+              currentTitle,
+              currentDescription,
+              currentDueDate,
+              currentPriority
             );
 
+            const dialog = document.querySelector(".dialog-add-todo");
+
+            dialog.showModal();
+
+            dialog.addEventListener("submit", () => {
+              clearOldElementCallback(".todo-wrapper");
+
+              const title = document.querySelector("#title").value;
+              const description = document.querySelector("#description").value;
+              const dueDate = document.querySelector("#dueDate").value;
+              const priority = document.querySelector("#priority").value;
+
+              ProjectManagerClass.accessProject(
+                ProjectManagerClass.showProjectStorage().findIndex(
+                  (project) => {
+                    return (
+                      project.name == todoWrapper[index].dataset.projectName
+                    );
+                  }
+                )
+              ).editTodo(
+                todoWrapper[index].dataset.index,
+                title,
+                description,
+                dueDate,
+                priority
+              );
+
+              renderTodoCallback(
+                ProjectManagerClass.accessProject(
+                  ProjectManagerClass.showProjectStorage().findIndex(
+                    (project) => {
+                      return (
+                        project.name == todoWrapper[index].dataset.projectName
+                      );
+                    }
+                  )
+                )
+              );
+            });
             renderTodoCallback(
               ProjectManagerClass.accessProject(
                 ProjectManagerClass.showProjectStorage().findIndex(
@@ -275,84 +346,68 @@ export function createProjectListener(
   clearOldElementCallback,
   renderTodoCallback,
   addTaskBtnCallback,
-  removeProjectListenerCallback
+  removeProjectListenerCallback,
+  dialogProjectCallback,
+  dialogAddTodoCallback
 ) {
-  const modal = (projectName) => {
-    const dialog = document.createElement("dialog");
-
-    const form = document.createElement("form");
-    form.setAttribute("method", "dialog");
-
-    const wrapper = document.createElement("div");
-
-    const label = document.createElement("label");
-    label.setAttribute("for", "projectName");
-    label.textContent = "Project Name";
-
-    const input = document.createElement("input");
-    label.setAttribute("type", "text");
-    label.setAttribute("id", "createdProjectName");
-    label.setAttribute("name", "projectName");
-    label.setAttribute("required");
-
-    wrapper.appendChild(label);
-    wrapper.appendChild(input);
-
-    const button = document.createElement("button");
-    button.setAttribute("type", "submit");
-    button.textContent = "Submit";
-
-    form.appendChild(wrapper);
-    form.appendChild(button);
-
-    dialog.appendChild(form);
-  };
-
   const createProject = document.querySelector(".create-project-btn");
 
   createProject.addEventListener("click", () => {
-    const projectName = prompt("Project?");
-    ProjectManagerClass.addProject(projectName);
+    clearOldElementCallback("dialog");
+    dialogProjectCallback();
+    const dialog = document.querySelector(".dialog-project");
 
-    renderProjectsCallback(
-      ProjectManagerClass.showProjectStorage(),
-      clearOldElementCallback
-    );
+    dialog.showModal();
 
-    removeProjectListenerCallback(
-      ProjectManagerClass,
-      renderProjectsCallback,
-      clearOldElementCallback,
-      renderTodoCallback,
-      addTaskBtnCallback
-    );
+    dialog.addEventListener("submit", () => {
+      const projectName = document.querySelector("#createdProjectName").value;
+      ProjectManagerClass.addProject(projectName);
 
-    clearOldElementCallback(".project-todo");
-    clearOldElementCallback(".add-task");
-    renderTodoCallback(
-      ProjectManagerClass.accessProject(
-        ProjectManagerClass.showProjectStorage().findIndex((project) => {
-          return project.name == projectName;
-        })
-      )
-    );
+      renderProjectsCallback(
+        ProjectManagerClass.showProjectStorage(),
+        clearOldElementCallback
+      );
 
-    addTaskBtnCallback(
-      ProjectManagerClass.accessProject(
-        ProjectManagerClass.showProjectStorage().findIndex((project) => {
-          return project.name == projectName;
-        })
-      )
-    );
+      removeProjectListenerCallback(
+        ProjectManagerClass,
+        renderProjectsCallback,
+        clearOldElementCallback,
+        renderTodoCallback,
+        addTaskBtnCallback
+      );
 
-    addTaskListener(
-      ProjectManagerClass.accessProject(
-        ProjectManagerClass.showProjectStorage().findIndex((project) => {
-          return project.name == projectName;
-        })
-      ),
-      clearOldElementCallback,
-      renderTodoCallback
-    );
+      clearOldElementCallback(".project-todo");
+      clearOldElementCallback(".add-task");
+
+      renderTodoCallback(
+        ProjectManagerClass.accessProject(
+          ProjectManagerClass.showProjectStorage().findIndex((project) => {
+            return project.name == projectName;
+          })
+        )
+      );
+
+      addTaskBtnCallback(
+        ProjectManagerClass.accessProject(
+          ProjectManagerClass.showProjectStorage().findIndex((project) => {
+            return project.name == projectName;
+          })
+        )
+      );
+
+      addTaskListener(
+        ProjectManagerClass.accessProject(
+          ProjectManagerClass.showProjectStorage().findIndex((project) => {
+            return project.name == projectName;
+          })
+        ),
+        clearOldElementCallback,
+        renderTodoCallback,
+        dialogAddTodoCallback
+      );
+
+      const form = document.querySelector("form");
+      form.reset();
+    });
   });
 }

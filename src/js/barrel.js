@@ -1,5 +1,12 @@
 export { ProjectManager } from "./class.js";
-export { renderProjects, renderTodo, addTaskBtn, mainDOM } from "./dom.js";
+export {
+  renderProjects,
+  renderTodo,
+  addTaskBtn,
+  mainDOM,
+  dialogProject,
+  dialogAddTodo,
+} from "./dom.js";
 
 export { clearOldElement, addTodoBtn, addDefaultProject } from "./helper.js";
 
