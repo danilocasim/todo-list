@@ -1,6 +1,11 @@
-function removeProjectBtn(projectName, el, imagePath) {
+import deleteBtn from "../assets/images/del-btn.png";
+import addBtn from "../assets/images/add-circle.png";
+import editBtn from "../assets/images/edit.png";
+import calendarIcon from "../assets/images/date.png";
+
+function removeProjectBtn(projectName, el) {
   const delBtn = document.createElement("img");
-  delBtn.src = imagePath;
+  delBtn.src = deleteBtn;
   delBtn.classList.add("remove-project");
   delBtn.dataset.projectName = projectName;
 
@@ -55,9 +60,19 @@ export function renderTodo(project) {
     title.classList.add("todo-title");
     const description = document.createElement("p");
     description.textContent = todo.description;
+
+    const dateWrapper = document.createElement("div");
+    dateWrapper.classList.add("date-wrapper");
+
+    const calendarImg = document.createElement("img");
+    calendarImg.src = calendarIcon;
+
     const dueDate = document.createElement("p");
     dueDate.textContent = todo.dueDate;
     dueDate.classList.add("todo-date");
+
+    dateWrapper.appendChild(calendarImg);
+    dateWrapper.appendChild(dueDate);
 
     const priority = document.createElement("p");
     priority.textContent = todo.priority;
@@ -75,33 +90,39 @@ export function renderTodo(project) {
       dueDate.style.removeProperty("text-direction");
     }
 
-    const editTodo = document.createElement("button");
-
+    const editTodo = document.createElement("img");
+    editTodo.src = editBtn;
     editTodo.classList.add("edit-todo");
 
-    editTodo.textContent = "Edit Todo";
     editTodo.dataset.projectName = project.name;
 
-    const removeTodo = document.createElement("button");
+    const removeTodo = document.createElement("img");
+    removeTodo.src = deleteBtn;
     removeTodo.classList.add("remove-todo");
-    removeTodo.textContent = "Delete Todo";
 
     const titleWrapper = document.createElement("div");
     titleWrapper.classList.add("title-wrapper");
+
     const buttonsWrapper = document.createElement("div");
+    buttonsWrapper.classList.add("buttons-wrapper");
+
+    const dueDateButtonsWrapper = document.createElement("div");
+    dueDateButtonsWrapper.classList.add("date-btn-wrapper");
 
     titleWrapper.appendChild(isTodoComplete);
     titleWrapper.appendChild(title);
 
     todoWrapper.appendChild(titleWrapper);
     // todoWrapper.appendChild(description);
-    todoWrapper.appendChild(dueDate);
+    dueDateButtonsWrapper.appendChild(dateWrapper);
     // todoWrapper.appendChild(priority);
 
     buttonsWrapper.appendChild(editTodo);
     buttonsWrapper.appendChild(removeTodo);
 
-    todoWrapper.appendChild(buttonsWrapper);
+    dueDateButtonsWrapper.appendChild(buttonsWrapper);
+
+    todoWrapper.appendChild(dueDateButtonsWrapper);
 
     projectTodoList.appendChild(todoWrapper);
   });
@@ -111,20 +132,25 @@ export function renderTodo(project) {
 export function addTaskBtn(project) {
   const addTaskContainer = document.querySelector(".add-task-container");
 
-  const addTask = document.createElement("button");
+  const addTask = document.createElement("img");
+  addTask.src = addBtn;
   addTask.classList.add("add-task");
-  addTask.textContent = "Add task";
-  addTask.style.backgroundColor = "green";
   addTask.dataset.projectName = project.name;
   addTaskContainer.appendChild(addTask);
 }
 
 export function createProjectBtn(el) {
-  const createProject = document.createElement("button");
-  createProject.classList.add("create-project-btn");
-  createProject.textContent = "Create Project";
-  createProject.style.display = "block  ";
-  el.appendChild(createProject);
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("create-project-btn");
+
+  const addTaskBtn = document.createElement("img");
+  addTaskBtn.src = addBtn;
+  const para = document.createElement("p");
+  para.textContent = "Add Project";
+
+  wrapper.appendChild(addTaskBtn);
+  wrapper.appendChild(para);
+  el.appendChild(wrapper);
 }
 
 function sideBar(el) {

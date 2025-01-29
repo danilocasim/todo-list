@@ -275,9 +275,39 @@ export function createProjectListener(
   clearOldElementCallback,
   renderTodoCallback,
   addTaskBtnCallback,
-  removeProjectListenerCallback,
-  imagePath
+  removeProjectListenerCallback
 ) {
+  const modal = (projectName) => {
+    const dialog = document.createElement("dialog");
+
+    const form = document.createElement("form");
+    form.setAttribute("method", "dialog");
+
+    const wrapper = document.createElement("div");
+
+    const label = document.createElement("label");
+    label.setAttribute("for", "projectName");
+    label.textContent = "Project Name";
+
+    const input = document.createElement("input");
+    label.setAttribute("type", "text");
+    label.setAttribute("id", "createdProjectName");
+    label.setAttribute("name", "projectName");
+    label.setAttribute("required");
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(input);
+
+    const button = document.createElement("button");
+    button.setAttribute("type", "submit");
+    button.textContent = "Submit";
+
+    form.appendChild(wrapper);
+    form.appendChild(button);
+
+    dialog.appendChild(form);
+  };
+
   const createProject = document.querySelector(".create-project-btn");
 
   createProject.addEventListener("click", () => {
@@ -286,8 +316,7 @@ export function createProjectListener(
 
     renderProjectsCallback(
       ProjectManagerClass.showProjectStorage(),
-      clearOldElementCallback,
-      imagePath
+      clearOldElementCallback
     );
 
     removeProjectListenerCallback(
@@ -295,8 +324,7 @@ export function createProjectListener(
       renderProjectsCallback,
       clearOldElementCallback,
       renderTodoCallback,
-      addTaskBtnCallback,
-      imagePath
+      addTaskBtnCallback
     );
 
     clearOldElementCallback(".project-todo");

@@ -24,15 +24,13 @@ export function addDefaultProject(
   removeProjectListenerCallback,
   renderTodoCallback,
   addTaskBtnCallback,
-  addTaskListenerCallback,
-  imagePath
+  addTaskListenerCallback
 ) {
   ProjectManagerClass.addProject("Default");
 
   renderProjectsCallback(
     ProjectManagerClass.showProjectStorage(),
-    clearOldElementCallback,
-    imagePath
+    clearOldElementCallback
   );
 
   removeProjectListenerCallback(
@@ -40,8 +38,7 @@ export function addDefaultProject(
     renderProjectsCallback,
     clearOldElementCallback,
     renderTodoCallback,
-    addTaskBtnCallback,
-    imagePath
+    addTaskBtnCallback
   );
 
   renderTodoCallback(

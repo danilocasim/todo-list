@@ -1,7 +1,5 @@
 import style from "../css/style.css";
 
-import deleteBtn from "../assets/images/del-btn.png";
-
 import {
   ProjectManager,
   renderProjects,
@@ -29,8 +27,7 @@ addDefaultProject(
   removeProjectListener,
   renderTodo,
   addTaskBtn,
-  addTaskListener,
-  deleteBtn
+  addTaskListener
 );
 
 //create proj button
@@ -41,8 +38,7 @@ createProjectListener(
   clearOldElement,
   renderTodo,
   addTaskBtn,
-  removeProjectListener,
-  deleteBtn
+  removeProjectListener
 );
 
 projectListener(
