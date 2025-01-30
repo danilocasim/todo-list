@@ -3,6 +3,8 @@ import addBtn from "../assets/images/add-circle.png";
 import editBtn from "../assets/images/edit.png";
 import calendarIcon from "../assets/images/date.png";
 
+import { format } from "date-fns";
+
 function removeProjectBtn(projectName, el) {
   const delBtn = document.createElement("img");
   delBtn.src = deleteBtn;
@@ -321,6 +323,9 @@ export function dialogAddTodo(
   labelDueDate.textContent = "Due Date";
 
   const inputDueDate = document.createElement("input");
+
+  const currentDate = format(new Date(), "yyyy-MM-dd");
+  inputDueDate.min = currentDate;
 
   inputDueDate.value = currentDueDate;
   inputDueDate.setAttribute("type", "date");
