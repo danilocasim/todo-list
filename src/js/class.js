@@ -27,72 +27,24 @@ class Project {
   }
 
   addTodo(title, description, dueDate, priority) {
-    if (localStorage.getItem("todo-storage")) {
-      const todoStorageJson = localStorage.getItem("todo-storage");
-
-      const todoStorage = JSON.parse(todoStorageJson);
-
-      todoStorage.push(new Todo(title, description, dueDate, priority));
-
-      const json = JSON.stringify(todoStorage);
-
-      localStorage.setItem("todo-storage", json);
-    } else {
-      this.#todoStorage.push(new Todo(title, description, dueDate, priority));
-
-      const todoStorageJson = JSON.stringify(this.#todoStorage);
-
-      localStorage.setItem("todo-storage", todoStorageJson);
-    }
+    this.#todoStorage.push(new Todo(title, description, dueDate, priority));
   }
 
   getTodoStorage() {
-    if (localStorage.getItem("todo-storage")) {
-      const todoStorageJson = localStorage.getItem("todo-storage");
-
-      const todoStorage = JSON.parse(todoStorageJson);
-
-      return todoStorage;
-    } else {
-      const todoStorageJson = JSON.stringify(this.#todoStorage);
-
-      localStorage.setItem("todo-storage", todoStorageJson);
-
-      return this.#todoStorage;
-    }
+    return this.#todoStorage;
   }
 
   editTodo(index, newTitle, newDescription, newDueDate, newPriority) {
-    if (localStorage.getItem("todo-storage")) {
-      const todoStorageJson = localStorage.getItem("todo-storage");
-
-      const todoStorage = JSON.parse(todoStorageJson);
-
-      todoStorage[index].editTodo(
-        newTitle,
-        newDescription,
-        newDueDate,
-        newPriority
-      );
-
-      const json = JSON.stringify(todoStorage);
-
-      localStorage.setItem("todo-storage", json);
-    }
+    this.#todoStorage[index].editTodo(
+      newTitle,
+      newDescription,
+      newDueDate,
+      newPriority
+    );
   }
 
   isCompleteTodo(index) {
-    if (localStorage.getItem("todo-storage")) {
-      const todoStorageJson = localStorage.getItem("todo-storage");
-
-      const todoStorage = JSON.parse(todoStorageJson);
-
-      todoStorage[index].isCompleteTodo();
-
-      const json = JSON.stringify(todoStorage);
-
-      localStorage.setItem("todo-storage", json);
-    }
+    this.#todoStorage[index].isCompleteTodo();
   }
 }
 
