@@ -52,14 +52,57 @@ export class ProjectManager {
   static #projectStorage = [];
 
   static addProject(name) {
-    this.#projectStorage.push(new Project(name));
+    if (localStorage.getItem("project-storage")) {
+      const projectStorageJson = localStorage.getItem("project-storage");
+
+      const projectStorage = JSON.parse(projectStorageJson);
+
+      projectStorage.push(new Project(name));
+      console.log(projectStorage);
+
+      const json = JSON.stringify(projectStorage);
+
+      localStorage.setItem("project-storage", json);
+    } else {
+      this.#projectStorage.push(new Project(name));
+
+      const projectStorage = JSON.stringify(this.#projectStorage);
+
+      localStorage.setItem("project-storage", projectStorage);
+    }
   }
 
   static showProjectStorage() {
-    return this.#projectStorage;
+    if (localStorage.getItem("project-storage")) {
+      const projectStorageJson = localStorage.getItem("project-storage");
+
+      const projectStorage = JSON.parse(projectStorageJson);
+
+      console.log(projectStorage);
+
+      return projectStorage;
+    } else {
+      const projectStorageJson = JSON.stringify(this.#projectStorage);
+
+      localStorage.setItem("project-storage", projectStorageJson);
+
+      return this.#projectStorage;
+    }
   }
 
   static accessProject(index) {
-    return this.#projectStorage[index];
+    if (localStorage.getItem("project-storage")) {
+      const projectStorageJson = localStorage.getItem("project-storage");
+
+      const projectStorage = JSON.parse(projectStorageJson);
+
+      return projectStorage[index];
+    } else {
+      const projectStorageJson = JSON.stringify(this.#projectStorage);
+
+      localStorage.setItem("project-storage", projectStorageJson);
+
+      return this.#projectStorage[index];
+    }
   }
 }
