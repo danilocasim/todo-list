@@ -22,16 +22,16 @@ import {
 
 mainDOM();
 
-addDefaultProject(
-  ProjectManager,
-  renderProjects,
-  clearOldElement,
-  removeProjectListener,
-  renderTodo,
-  addTaskBtn,
-  addTaskListener,
-  dialogAddTodo
-);
+// addDefaultProject(
+//   ProjectManager,
+//   renderProjects,
+//   clearOldElement,
+//   removeProjectListener,
+//   renderTodo,
+//   addTaskBtn,
+//   addTaskListener,
+//   dialogAddTodo
+// );
 
 createProjectListener(
   ProjectManager,

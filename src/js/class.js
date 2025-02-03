@@ -51,23 +51,29 @@ class Project {
 export class ProjectManager {
   static #projectStorage = [];
 
+  static restoreMethod(projectStorage) {
+    projectStorage.forEach((project) => {
+      Object.assign(project, {
+        "#todoStorage": project.getTodoStorage(),
+      });
+    });
+  }
+
   static addProject(name) {
     if (localStorage.getItem("project-storage")) {
       const projectStorageJson = localStorage.getItem("project-storage");
-
       const projectStorage = JSON.parse(projectStorageJson);
-
       projectStorage.push(new Project(name));
-      console.log(projectStorage);
 
+      this.restoreMethod(projectStorage);
       const json = JSON.stringify(projectStorage);
-
+      console.log(json);
       localStorage.setItem("project-storage", json);
     } else {
       this.#projectStorage.push(new Project(name));
 
+      this.restoreMethod(this.#projectStorage);
       const projectStorage = JSON.stringify(this.#projectStorage);
-
       localStorage.setItem("project-storage", projectStorage);
     }
   }
@@ -78,15 +84,7 @@ export class ProjectManager {
 
       const projectStorage = JSON.parse(projectStorageJson);
 
-      console.log(projectStorage);
-
       return projectStorage;
-    } else {
-      const projectStorageJson = JSON.stringify(this.#projectStorage);
-
-      localStorage.setItem("project-storage", projectStorageJson);
-
-      return this.#projectStorage;
     }
   }
 
@@ -97,12 +95,6 @@ export class ProjectManager {
       const projectStorage = JSON.parse(projectStorageJson);
 
       return projectStorage[index];
-    } else {
-      const projectStorageJson = JSON.stringify(this.#projectStorage);
-
-      localStorage.setItem("project-storage", projectStorageJson);
-
-      return this.#projectStorage[index];
     }
   }
 }
