@@ -7,14 +7,14 @@ class Todo {
     this.isComplete = false;
   }
 
-  editTodo(newTitle, newDescription, newDueDate, newPriority) {
+  editTask(newTitle, newDescription, newDueDate, newPriority) {
     this.title = newTitle;
     this.description = newDescription;
     this.dueDate = newDueDate;
     this.priority = newPriority;
   }
 
-  isCompleteTodo() {
+  isCompleteTask() {
     this.isComplete = this.isComplete == false ? true : false;
   }
 }
@@ -35,7 +35,7 @@ class Project {
   }
 
   editTodo(index, newTitle, newDescription, newDueDate, newPriority) {
-    this.todoStorage[index].editTodo(
+    this.todoStorage[index].editTask(
       newTitle,
       newDescription,
       newDueDate,
@@ -44,25 +44,11 @@ class Project {
   }
 
   isCompleteTodo(index) {
-    this.todoStorage[index].isCompleteTodo();
+    this.todoStorage[index].isCompleteTask();
   }
 }
 
 class RestoreMethod {
-  static #arrayWithMethods;
-
-  static sendTheArrayWithMethods(obj) {
-    if (localStorage.getItem("todo-methods")) {
-      let methods = localStorage.getItem("todo-methods");
-      let parsedJson = JSON.parse(methods);
-      this.#arrayWithMethods = parsedJson;
-    } else {
-      this.#arrayWithMethods = obj;
-
-      localStorage.setItem("todo-methods", obj);
-    }
-  }
-
   static restoreTodoStorage(json) {
     const projectStorage = JSON.parse(json);
     console.log(projectStorage);
@@ -75,20 +61,25 @@ class RestoreMethod {
     return JSON.stringify(projectStorage);
   }
 
-  static restoreTodoMethods(projectStorage, instance) {
+  static restoreTodoMethods(projectStorage) {
+    const projectInstance = new Project();
+
     projectStorage.forEach((project) => {
       Object.assign(Object.getPrototypeOf(project), {
-        getTodoStorage: instance.getTodoStorage,
-        addTodo: instance.addTodo,
-        editTodo: instance.editTodo,
-        isCompleteTodo: instance.isCompleteTodo,
+        getTodoStorage: projectInstance.getTodoStorage,
+        addTodo: projectInstance.addTodo,
+        editTodo: projectInstance.editTodo,
+        isCompleteTodo: projectInstance.isCompleteTodo,
+      });
+
+      const todoInstance = new Todo();
+
+      Object.assign(Object.getPrototypeOf(project.todoStorage), {
+        editTask: todoInstance.editTask,
+        isCompleteTask: todoInstance.isCompleteTask,
       });
     });
   }
-
-  static getArrayWithMethods = () => {
-    return this.#arrayWithMethods;
-  };
 }
 
 export class ProjectManager {
@@ -105,19 +96,14 @@ export class ProjectManager {
       projectStorage.push(new Project(name));
 
       const finalJson = JSON.stringify(projectStorage);
-      console.log(json);
 
       localStorage.setItem("project-storage", finalJson);
     } else {
       this.#projectStorage.push(new Project(name));
 
-      RestoreMethod.sendTheArrayWithMethods(this.#projectStorage[0]);
-
       const projectStorage = RestoreMethod.restoreTodoStorage(
         JSON.stringify(this.#projectStorage)
       );
-
-      console.log(RestoreMethod.getArrayWithMethods());
 
       localStorage.setItem("project-storage", projectStorage);
     }
@@ -129,14 +115,15 @@ export class ProjectManager {
 
       const projectStorage = JSON.parse(projectStorageJson);
 
-      RestoreMethod.restoreTodoMethods(projectStorage, new Project("Instance"));
+      RestoreMethod.restoreTodoMethods(projectStorage);
 
-      const newProjectStorage = JSON.stringify(projectStorage);
+      const newProjectStorageJson = JSON.stringify(projectStorage);
+      localStorage.setItem("project-storage", newProjectStorageJson);
 
-      localStorage.setItem("project-storage", newProjectStorage);
       return projectStorage;
     } else {
       localStorage.setItem("project-storage", this.#projectStorage);
+      return this.#projectStorage;
     }
   }
 
@@ -145,11 +132,17 @@ export class ProjectManager {
       const projectStorageJson = localStorage.getItem("project-storage");
 
       const projectStorage = JSON.parse(projectStorageJson);
-      RestoreMethod.restoreTodoMethods(projectStorage, new Project("Instance"));
+
+      RestoreMethod.restoreTodoMethods(projectStorage, new Project());
+
+      const newProjectStorageJson = JSON.stringify(projectStorage);
+      localStorage.setItem("project-storage", newProjectStorageJson);
 
       return projectStorage[index];
     } else {
       localStorage.setItem("project-storage", this.#projectStorage);
+
+      return this.#projectStorage[index];
     }
   }
 }

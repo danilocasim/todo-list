@@ -89,13 +89,16 @@ export function removeProjectListener(
           if (projectTodo) {
             projectTodo.remove();
           }
+
+          delBtn.remove();
+
           ProjectManagerClass.showProjectStorage().splice(index, 1);
+
           renderProjectsCallback(
             ProjectManagerClass.showProjectStorage(),
             clearOldElementCallback,
             imagePath
           );
-          delBtn.remove();
 
           if (
             ProjectManagerClass.showProjectStorage().length > 0 &&
