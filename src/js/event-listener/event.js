@@ -92,7 +92,7 @@ export function removeProjectListener(
 
           delBtn.remove();
 
-          ProjectManagerClass.showProjectStorage().splice(index, 1);
+          ProjectManagerClass.removeProject(index);
 
           renderProjectsCallback(
             ProjectManagerClass.showProjectStorage(),

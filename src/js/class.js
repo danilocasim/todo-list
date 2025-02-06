@@ -7,14 +7,14 @@ class Todo {
     this.isComplete = false;
   }
 
-  editTask(newTitle, newDescription, newDueDate, newPriority) {
+  editTodo(newTitle, newDescription, newDueDate, newPriority) {
     this.title = newTitle;
     this.description = newDescription;
     this.dueDate = newDueDate;
     this.priority = newPriority;
   }
 
-  isCompleteTask() {
+  isCompleteTodo() {
     this.isComplete = this.isComplete == false ? true : false;
   }
 }
@@ -48,7 +48,7 @@ class Project {
   }
 }
 
-class RestoreMethod {
+class Restore {
   static restoreTodoStorage(json) {
     const projectStorage = JSON.parse(json);
     console.log(projectStorage);
@@ -63,6 +63,7 @@ class RestoreMethod {
 
   static restoreTodoMethods(projectStorage) {
     const projectInstance = new Project();
+    const todoInstance = new Todo();
 
     projectStorage.forEach((project) => {
       Object.assign(Object.getPrototypeOf(project), {
@@ -72,24 +73,27 @@ class RestoreMethod {
         isCompleteTodo: projectInstance.isCompleteTodo,
       });
 
-      const todoInstance = new Todo();
-
       Object.assign(Object.getPrototypeOf(project.todoStorage), {
-        editTask: todoInstance.editTask,
-        isCompleteTask: todoInstance.isCompleteTask,
+        editTodo: todoInstance.editTodo,
+        isCompleteTodo: todoInstance.isCompleteTodo,
       });
     });
   }
-}
 
+  static restoreTodoStorageData(projectStorage, todoData) {}
+}
 export class ProjectManager {
   static #projectStorage = [];
+
+  static getProjectStorage = () => {
+    return this.#projectStorage;
+  };
 
   static addProject(name) {
     if (localStorage.getItem("project-storage")) {
       const projectStorageJson = localStorage.getItem("project-storage");
 
-      const json = RestoreMethod.restoreTodoStorage(projectStorageJson);
+      const json = Restore.restoreTodoStorage(projectStorageJson);
 
       const projectStorage = JSON.parse(json);
 
@@ -101,7 +105,7 @@ export class ProjectManager {
     } else {
       this.#projectStorage.push(new Project(name));
 
-      const projectStorage = RestoreMethod.restoreTodoStorage(
+      const projectStorage = Restore.restoreTodoStorage(
         JSON.stringify(this.#projectStorage)
       );
 
@@ -109,18 +113,23 @@ export class ProjectManager {
     }
   }
 
+  static removeProject(index) {
+    this.showProjectStorage().splice(index, 1);
+
+    const newProjectStorageJson = JSON.stringify(this.getProjectStorage());
+    localStorage.setItem("project-storage", newProjectStorageJson);
+  }
+
   static showProjectStorage() {
     if (localStorage.getItem("project-storage")) {
       const projectStorageJson = localStorage.getItem("project-storage");
 
       const projectStorage = JSON.parse(projectStorageJson);
+      this.#projectStorage = projectStorage;
 
-      RestoreMethod.restoreTodoMethods(projectStorage);
+      Restore.restoreTodoMethods(this.#projectStorage);
 
-      const newProjectStorageJson = JSON.stringify(projectStorage);
-      localStorage.setItem("project-storage", newProjectStorageJson);
-
-      return projectStorage;
+      return this.#projectStorage;
     } else {
       localStorage.setItem("project-storage", this.#projectStorage);
       return this.#projectStorage;
@@ -133,7 +142,7 @@ export class ProjectManager {
 
       const projectStorage = JSON.parse(projectStorageJson);
 
-      RestoreMethod.restoreTodoMethods(projectStorage, new Project());
+      Restore.restoreTodoMethods(projectStorage);
 
       const newProjectStorageJson = JSON.stringify(projectStorage);
       localStorage.setItem("project-storage", newProjectStorageJson);
