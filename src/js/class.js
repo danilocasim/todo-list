@@ -1,3 +1,52 @@
+class Restore {
+  static restoreTodoStorage(json) {
+    const projectStorage = JSON.parse(json);
+    console.log(projectStorage);
+    projectStorage.forEach((project) => {
+      Object.assign(project, {
+        todoStorage: project.todoStorage,
+      });
+    });
+
+    return JSON.stringify(projectStorage);
+  }
+
+  static restoreTodoMethods(projectStorage) {
+    const projectInstance = new Project();
+    const todoInstance = new Todo();
+
+    projectStorage.forEach((project) => {
+      Object.assign(Object.getPrototypeOf(project), {
+        getTodoStorage: projectInstance.getTodoStorage,
+        addTodo: projectInstance.addTodo,
+        editTodo: projectInstance.editTodo,
+        isCompleteTodo: projectInstance.isCompleteTodo,
+      });
+
+      Object.assign(Object.getPrototypeOf(project.todoStorage), {
+        editTodo: todoInstance.editTodo,
+        isCompleteTodo: todoInstance.isCompleteTodo,
+      });
+    });
+  }
+
+  static restoreTodoStorageData(todoStorageJson) {
+    const todoStorageArr = JSON.parse(todoStorageJson);
+
+    console.log(todoStorageArr);
+
+    todoStorageArr.forEach((todo) => {
+      Object.assign(todo, {
+        title: todo.title,
+        description: todo.description,
+        dueDate: todo.dueDate,
+        priority: todo.priority,
+        isComplete: todo.isComplete,
+      });
+    });
+  }
+}
+
 class Todo {
   constructor(title, description, dueDate, priority) {
     this.title = title;
@@ -48,40 +97,6 @@ class Project {
   }
 }
 
-class Restore {
-  static restoreTodoStorage(json) {
-    const projectStorage = JSON.parse(json);
-    console.log(projectStorage);
-    projectStorage.forEach((project) => {
-      Object.assign(project, {
-        todoStorage: project.todoStorage,
-      });
-    });
-
-    return JSON.stringify(projectStorage);
-  }
-
-  static restoreTodoMethods(projectStorage) {
-    const projectInstance = new Project();
-    const todoInstance = new Todo();
-
-    projectStorage.forEach((project) => {
-      Object.assign(Object.getPrototypeOf(project), {
-        getTodoStorage: projectInstance.getTodoStorage,
-        addTodo: projectInstance.addTodo,
-        editTodo: projectInstance.editTodo,
-        isCompleteTodo: projectInstance.isCompleteTodo,
-      });
-
-      Object.assign(Object.getPrototypeOf(project.todoStorage), {
-        editTodo: todoInstance.editTodo,
-        isCompleteTodo: todoInstance.isCompleteTodo,
-      });
-    });
-  }
-
-  static restoreTodoStorageData(projectStorage, todoData) {}
-}
 export class ProjectManager {
   static #projectStorage = [];
 
