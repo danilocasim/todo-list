@@ -33,7 +33,15 @@ export function addDefaultProject(
   addTaskListenerCallback,
   dialogAddTodoCallback
 ) {
-  ProjectManagerClass.addProject("Default");
+  if (
+    !ProjectManagerClass.accessProject(
+      ProjectManagerClass.showProjectStorage().findIndex((project) => {
+        return project.name == "Default";
+      })
+    )
+  ) {
+    ProjectManagerClass.addProject("Default");
+  }
 
   renderProjectsCallback(
     ProjectManagerClass.showProjectStorage(),
