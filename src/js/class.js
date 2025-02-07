@@ -23,20 +23,20 @@ class Restore {
         isCompleteTodo: projectInstance.isCompleteTodo,
       });
 
-      Object.assign(Object.getPrototypeOf(project.todoStorage), {
-        editTodo: todoInstance.editTodo,
-        isCompleteTodo: todoInstance.isCompleteTodo,
+      Object.assign(Object.getPrototypeOf(project), {
+        editTask: todoInstance.editTask,
+        isCompleteTask: todoInstance.isCompleteTask,
       });
     });
   }
 
-  static restoreTodoStorageData(todoStorageJson) {
+  static restoreTodoStorageData(todoStorageJson, currentProject) {
     const todoStorageArr = JSON.parse(todoStorageJson);
 
     console.log(todoStorageArr);
 
     todoStorageArr.forEach((todo) => {
-      Object.assign(todo, {
+      currentProject.push({
         title: todo.title,
         description: todo.description,
         dueDate: todo.dueDate,
@@ -56,14 +56,14 @@ class Todo {
     this.isComplete = false;
   }
 
-  editTodo(newTitle, newDescription, newDueDate, newPriority) {
+  editTask(newTitle, newDescription, newDueDate, newPriority) {
     this.title = newTitle;
     this.description = newDescription;
     this.dueDate = newDueDate;
     this.priority = newPriority;
   }
 
-  isCompleteTodo() {
+  isCompleteTask() {
     this.isComplete = this.isComplete == false ? true : false;
   }
 }
@@ -76,24 +76,76 @@ class Project {
   }
 
   addTodo(title, description, dueDate, priority) {
-    this.todoStorage.push(new Todo(title, description, dueDate, priority));
+    if (localStorage.getItem("project-storage")) {
+      const projectStorageJson = localStorage.getItem("project-storage");
+
+      const projectStorage = JSON.parse(projectStorageJson);
+
+      projectStorage[
+        projectStorage.findIndex((project) => {
+          return project.name == this.name;
+        })
+      ].todoStorage.push(new Todo(title, description, dueDate, priority));
+
+      console.log(projectStorage);
+      const newProjectStorageJson = JSON.stringify(projectStorage);
+      localStorage.setItem("project-storage", newProjectStorageJson);
+    }
   }
 
   getTodoStorage() {
-    return this.todoStorage;
+    if (localStorage.getItem("project-storage")) {
+      const projectStorageJson = localStorage.getItem("project-storage");
+      const projectStorage = JSON.parse(projectStorageJson);
+
+      return projectStorage[
+        projectStorage.findIndex((project) => {
+          return project.name == this.name;
+        })
+      ].todoStorage;
+    }
   }
 
   editTodo(index, newTitle, newDescription, newDueDate, newPriority) {
-    this.todoStorage[index].editTask(
-      newTitle,
-      newDescription,
-      newDueDate,
-      newPriority
-    );
+    if (localStorage.getItem("project-storage")) {
+      const projectStorageJson = localStorage.getItem("project-storage");
+
+      const projectStorage = JSON.parse(projectStorageJson);
+
+      projectStorage[
+        projectStorage.findIndex((project) => {
+          return project.name == this.name;
+        })
+      ].todoStorage[index].editTask(
+        newTitle,
+        newDescription,
+        newDueDate,
+        newPriority
+      );
+
+      const newProjectStorageJson = JSON.stringify(projectStorage);
+
+      localStorage.setItem("project-storage", newProjectStorageJson);
+    }
   }
 
   isCompleteTodo(index) {
-    this.todoStorage[index].isCompleteTask();
+    if (localStorage.getItem("project-storage")) {
+      const projectStorageJson = localStorage.getItem("project-storage");
+
+      const projectStorage = JSON.parse(projectStorageJson);
+
+      projectStorage[
+        projectStorage.findIndex((project) => {
+          return project.name == this.name;
+        })
+      ].todoStorage[index].isCompleteTask();
+
+      console.log(projectStorage);
+      const newProjectStorageJson = JSON.stringify(projectStorage);
+
+      localStorage.setItem("project-storage", newProjectStorageJson);
+    }
   }
 }
 
@@ -143,10 +195,10 @@ export class ProjectManager {
       this.#projectStorage = projectStorage;
 
       Restore.restoreTodoMethods(this.#projectStorage);
-
       return this.#projectStorage;
     } else {
-      localStorage.setItem("project-storage", this.#projectStorage);
+      const projectStorageJson = JSON.stringify(this.#projectStorage);
+      localStorage.setItem("project-storage", projectStorageJson);
       return this.#projectStorage;
     }
   }
