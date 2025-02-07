@@ -1,4 +1,4 @@
-export { ProjectManager } from "./class.js";
+export { ProjectManager, Project } from "./class.js";
 export {
   renderProjects,
   renderTodo,

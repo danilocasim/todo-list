@@ -251,6 +251,7 @@ export function editTodoListener(
 
 export function removeTodoListener(
   ProjectManagerClass,
+  ProjectClass,
   renderTodoCallback,
   clearOldElementCallback
 ) {
@@ -263,17 +264,13 @@ export function removeTodoListener(
       allRemoveTodoBtn.forEach((button, index) => {
         if (e.target == button) {
           if (todoWrapper[index]) {
-            ProjectManagerClass.accessProject(
-              ProjectManagerClass.showProjectStorage().findIndex((project) => {
-                return project.name == todoWrapper[index].dataset.projectName;
-              })
-            )
-              .getTodoStorage()
-              .splice(todoWrapper[index].dataset.index, 1);
+            ProjectClass.removeTodo(
+              todoWrapper[index].dataset.projectName,
+              todoWrapper[index].dataset.index
+            );
 
             todoWrapper[index].remove();
             button.remove();
-
             clearOldElementCallback(".project-todo");
 
             renderTodoCallback(

@@ -18,6 +18,7 @@ import {
   addDefaultProject,
   dialogProject,
   dialogAddTodo,
+  Project,
 } from "./barrel.js";
 
 mainDOM();
@@ -53,6 +54,6 @@ projectListener(
   addTaskListener,
   dialogAddTodo
 );
-removeTodoListener(ProjectManager, renderTodo, clearOldElement);
+removeTodoListener(ProjectManager, Project, renderTodo, clearOldElement);
 editTodoListener(ProjectManager, clearOldElement, renderTodo, dialogAddTodo);
 isTodoCompleteListener(ProjectManager);

@@ -68,11 +68,25 @@ class Todo {
   }
 }
 
-class Project {
+export class Project {
   todoStorage = [];
 
   constructor(name) {
     this.name = name;
+  }
+
+  static removeTodo(todoProjectName, todoIndex) {
+    const projectStorageJson = localStorage.getItem("project-storage");
+    const projectStorage = JSON.parse(projectStorageJson);
+
+    projectStorage[
+      projectStorage.findIndex((project) => {
+        return project.name == todoProjectName;
+      })
+    ].todoStorage.splice(todoIndex, 1);
+
+    const newProjectStorageJson = JSON.stringify(projectStorage);
+    localStorage.setItem("project-storage", newProjectStorageJson);
   }
 
   addTodo(title, description, dueDate, priority) {
@@ -141,7 +155,6 @@ class Project {
         })
       ].todoStorage[index].isCompleteTask();
 
-      console.log(projectStorage);
       const newProjectStorageJson = JSON.stringify(projectStorage);
 
       localStorage.setItem("project-storage", newProjectStorageJson);
