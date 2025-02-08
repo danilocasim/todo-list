@@ -6,7 +6,10 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "dev": "webpack serve --open --config webpack.dev.js",
-    "deploy": "git subtree push --prefix dist origin gh-pages"
+    "deploy": "npm run merge & npm run build & npm run addDist & npm run push & git checkout main",
+    "merge": "git checkout gh-pages && git merge main --no-edit",
+    "addDist": "git add dist -f && git commit -m 'Deployment commit'",
+    "push": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
