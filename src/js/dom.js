@@ -108,23 +108,16 @@ export function renderTodo(project) {
     const buttonsWrapper = document.createElement("div");
     buttonsWrapper.classList.add("buttons-wrapper");
 
-    const dueDateButtonsWrapper = document.createElement("div");
-    dueDateButtonsWrapper.classList.add("date-btn-wrapper");
-
     titleWrapper.appendChild(isTodoComplete);
     titleWrapper.appendChild(title);
 
     todoWrapper.appendChild(titleWrapper);
-    // todoWrapper.appendChild(description);
-    dueDateButtonsWrapper.appendChild(dateWrapper);
-    // todoWrapper.appendChild(priority);
 
     buttonsWrapper.appendChild(editTodo);
     buttonsWrapper.appendChild(removeTodo);
 
-    dueDateButtonsWrapper.appendChild(buttonsWrapper);
-
-    todoWrapper.appendChild(dueDateButtonsWrapper);
+    todoWrapper.appendChild(dateWrapper);
+    todoWrapper.appendChild(buttonsWrapper);
 
     projectTodoList.appendChild(todoWrapper);
   });
