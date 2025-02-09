@@ -1,4 +1,17 @@
-export function addTaskListener(
+import {
+  ProjectManager,
+  renderProjects,
+  clearOldElement,
+  addTaskBtn,
+  renderTodo,
+  addTodoBtn,
+  addDefaultProject,
+  dialogProject,
+  dialogAddTodo,
+  Project,
+} from "../barrel.js";
+
+function addTaskListener(
   project,
   clearOldElementCallback,
   renderTodoCallback,
@@ -20,7 +33,6 @@ export function addTaskListener(
       const dueDate = document.querySelector("#dueDate").value;
       const priority = document.querySelector("#priority").value;
       project.addTodo(title, description, dueDate, priority);
-      //remove old todo wrapper
       clearOldElementCallback(".project-todo");
 
       renderTodoCallback(project);
@@ -31,13 +43,12 @@ export function addTaskListener(
   });
 }
 
-export function projectListener(
+function projectListener(
   ProjectManagerClass,
   addTodoBtnCallback,
   clearOldElementCallback,
   renderTodoCallback,
   addTaskBtnCallback,
-  addTaskListenerCallback,
   dialogAddTodoCallback
 ) {
   const body = document.body;
@@ -50,7 +61,7 @@ export function projectListener(
             ProjectManagerClass.accessProject(index),
             clearOldElementCallback,
             addTaskBtnCallback,
-            addTaskListenerCallback,
+            addTaskListener,
             renderTodoCallback,
             dialogAddTodoCallback
           );
@@ -64,7 +75,7 @@ export function projectListener(
   });
 }
 
-export function removeProjectListener(
+function removeProjectListener(
   ProjectManagerClass,
   renderProjectsCallback,
   clearOldElementCallback,
@@ -140,7 +151,7 @@ export function removeProjectListener(
   });
 }
 
-export function editTodoListener(
+function editTodoListener(
   ProjectManagerClass,
   clearOldElementCallback,
   renderTodoCallback,
@@ -249,7 +260,7 @@ export function editTodoListener(
   });
 }
 
-export function removeTodoListener(
+function removeTodoListener(
   ProjectManagerClass,
   ProjectClass,
   renderTodoCallback,
@@ -291,7 +302,7 @@ export function removeTodoListener(
   });
 }
 
-export function isTodoCompleteListener(ProjectManagerClass) {
+function isTodoCompleteListener(ProjectManagerClass) {
   const body = document.body;
   body.addEventListener("click", (e) => {
     if (e.target.classList.value == "complete-todo") {
@@ -340,13 +351,12 @@ export function isTodoCompleteListener(ProjectManagerClass) {
   });
 }
 
-export function createProjectListener(
+function createProjectListener(
   ProjectManagerClass,
   renderProjectsCallback,
   clearOldElementCallback,
   renderTodoCallback,
   addTaskBtnCallback,
-  removeProjectListenerCallback,
   dialogProjectCallback,
   dialogAddTodoCallback
 ) {
@@ -368,7 +378,7 @@ export function createProjectListener(
         clearOldElementCallback
       );
 
-      removeProjectListenerCallback(
+      removeProjectListener(
         ProjectManagerClass,
         renderProjectsCallback,
         clearOldElementCallback,
@@ -411,3 +421,38 @@ export function createProjectListener(
     });
   });
 }
+
+export const eventListeners = () => {
+  addDefaultProject(
+    ProjectManager,
+    renderProjects,
+    clearOldElement,
+    removeProjectListener,
+    renderTodo,
+    addTaskBtn,
+    addTaskListener,
+    dialogAddTodo
+  );
+
+  createProjectListener(
+    ProjectManager,
+    renderProjects,
+    clearOldElement,
+    renderTodo,
+    addTaskBtn,
+    dialogProject,
+    dialogAddTodo
+  );
+
+  projectListener(
+    ProjectManager,
+    addTodoBtn,
+    clearOldElement,
+    renderTodo,
+    addTaskBtn,
+    dialogAddTodo
+  );
+  removeTodoListener(ProjectManager, Project, renderTodo, clearOldElement);
+  editTodoListener(ProjectManager, clearOldElement, renderTodo, dialogAddTodo);
+  isTodoCompleteListener(ProjectManager);
+};
