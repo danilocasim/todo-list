@@ -176,7 +176,6 @@ function editTodoListener() {
               currentDueDate,
               currentPriority
             );
-
             const dialog = document.querySelector(".dialog-add-todo");
 
             dialog.showModal();
