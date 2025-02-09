@@ -10,12 +10,4 @@ export {
 
 export { clearOldElement, addTodoBtn, addDefaultProject } from "./helper.js";
 
-export {
-  addTaskListener,
-  projectListener,
-  removeTodoListener,
-  removeProjectListener,
-  editTodoListener,
-  isTodoCompleteListener,
-  createProjectListener,
-} from "./event-listener/event.js";
+export { eventListeners } from "./event-listener/event.js";
