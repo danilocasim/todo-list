@@ -14,7 +14,7 @@ function removeProjectBtn(projectName, el) {
   el.appendChild(delBtn);
 }
 
-export function renderProjects(projects, clearOldElementCallback, imagePath) {
+export function renderProjects(projects, clearOldElementCallback) {
   clearOldElementCallback(".project");
   clearOldElementCallback(".project-wrapper");
 
@@ -27,7 +27,7 @@ export function renderProjects(projects, clearOldElementCallback, imagePath) {
     const wrapper = document.createElement("div");
 
     const projectDiv = document.createElement("button");
-    removeProjectBtn(project.name, wrapper, imagePath);
+    removeProjectBtn(project.name, wrapper);
 
     projectDiv.classList.add("project");
 
@@ -115,9 +115,7 @@ export function renderTodo(project) {
     titleWrapper.appendChild(title);
 
     todoWrapper.appendChild(titleWrapper);
-    // todoWrapper.appendChild(description);
     dueDateButtonsWrapper.appendChild(dateWrapper);
-    // todoWrapper.appendChild(priority);
 
     buttonsWrapper.appendChild(editTodo);
     buttonsWrapper.appendChild(removeTodo);

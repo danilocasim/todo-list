@@ -29,22 +29,6 @@ class Restore {
       });
     });
   }
-
-  static restoreTodoStorageData(todoStorageJson, currentProject) {
-    const todoStorageArr = JSON.parse(todoStorageJson);
-
-    console.log(todoStorageArr);
-
-    todoStorageArr.forEach((todo) => {
-      currentProject.push({
-        title: todo.title,
-        description: todo.description,
-        dueDate: todo.dueDate,
-        priority: todo.priority,
-        isComplete: todo.isComplete,
-      });
-    });
-  }
 }
 
 class Todo {
