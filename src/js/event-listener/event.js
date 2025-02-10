@@ -15,7 +15,7 @@ function addTaskListener(
   project,
   clearOldElementCallback,
   renderTodoCallback,
-  dialogAddTodoCallback
+  dialogAddTodoCallback,
 ) {
   const addTask = document.querySelector(".add-task");
 
@@ -56,7 +56,7 @@ function projectListener() {
             addTaskBtn,
             addTaskListener,
             renderTodo,
-            dialogAddTodo
+            dialogAddTodo,
           );
           clearOldElement(".project-todo");
           renderTodo(ProjectManager.accessProject(index));
@@ -102,7 +102,7 @@ function removeProjectListener() {
             addTaskListener(
               ProjectManager.accessProject(index - 1),
               clearOldElement,
-              renderTodo
+              renderTodo,
             );
           }
           if (
@@ -117,7 +117,7 @@ function removeProjectListener() {
             addTaskListener(
               ProjectManager.accessProject(index),
               clearOldElement,
-              renderTodo
+              renderTodo,
             );
           }
 
@@ -149,32 +149,32 @@ function editTodoListener() {
             const currentTitle = ProjectManager.accessProject(
               ProjectManager.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
-              })
+              }),
             ).getTodoStorage()[todoWrapper[index].dataset.index].title;
 
             const currentDescription = ProjectManager.accessProject(
               ProjectManager.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
-              })
+              }),
             ).getTodoStorage()[todoWrapper[index].dataset.index].description;
 
             const currentDueDate = ProjectManager.accessProject(
               ProjectManager.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
-              })
+              }),
             ).getTodoStorage()[todoWrapper[index].dataset.index].dueDate;
 
             const currentPriority = ProjectManager.accessProject(
               ProjectManager.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
-              })
+              }),
             ).getTodoStorage()[todoWrapper[index].dataset.index].priority;
 
             dialogAddTodo(
               currentTitle,
               currentDescription,
               currentDueDate,
-              currentPriority
+              currentPriority,
             );
             const dialog = document.querySelector(".dialog-add-todo");
 
@@ -191,13 +191,13 @@ function editTodoListener() {
               ProjectManager.accessProject(
                 ProjectManager.showProjectStorage().findIndex((project) => {
                   return project.name == todoWrapper[index].dataset.projectName;
-                })
+                }),
               ).editTodo(
                 todoWrapper[index].dataset.index,
                 title,
                 description,
                 dueDate,
-                priority
+                priority,
               );
 
               renderTodo(
@@ -206,16 +206,16 @@ function editTodoListener() {
                     return (
                       project.name == todoWrapper[index].dataset.projectName
                     );
-                  })
-                )
+                  }),
+                ),
               );
             });
             renderTodo(
               ProjectManager.accessProject(
                 ProjectManager.showProjectStorage().findIndex((project) => {
                   return project.name == todoWrapper[index].dataset.projectName;
-                })
-              )
+                }),
+              ),
             );
           }
         }
@@ -236,7 +236,7 @@ function removeTodoListener() {
           if (todoWrapper[index]) {
             Project.removeTodo(
               todoWrapper[index].dataset.projectName,
-              todoWrapper[index].dataset.index
+              todoWrapper[index].dataset.index,
             );
 
             todoWrapper[index].remove();
@@ -247,8 +247,8 @@ function removeTodoListener() {
               ProjectManager.accessProject(
                 ProjectManager.showProjectStorage().findIndex((project) => {
                   return project.name == todoWrapper[index].dataset.projectName;
-                })
-              )
+                }),
+              ),
             );
           }
         }
@@ -272,14 +272,14 @@ function isTodoCompleteListener() {
             ProjectManager.accessProject(
               ProjectManager.showProjectStorage().findIndex((project) => {
                 return project.name == todoWrapper[index].dataset.projectName;
-              })
+              }),
             ).isCompleteTodo(todoWrapper[index].dataset.index);
 
             if (
               ProjectManager.accessProject(
                 ProjectManager.showProjectStorage().findIndex((project) => {
                   return project.name == todoWrapper[index].dataset.projectName;
-                })
+                }),
               ).getTodoStorage()[todoWrapper[index].dataset.index].isComplete
             ) {
               allTitle[todoWrapper[index].dataset.index].style.textDecoration =
@@ -289,10 +289,10 @@ function isTodoCompleteListener() {
                 "line-through";
             } else {
               allTitle[todoWrapper[index].dataset.index].style.removeProperty(
-                "text-decoration"
+                "text-decoration",
               );
               allDate[todoWrapper[index].dataset.index].style.removeProperty(
-                "text-decoration"
+                "text-decoration",
               );
             }
           }
@@ -323,7 +323,7 @@ function createProjectListener() {
         renderProjects,
         clearOldElement,
         renderTodo,
-        addTaskBtn
+        addTaskBtn,
       );
 
       clearOldElement(".project-todo");
@@ -333,27 +333,27 @@ function createProjectListener() {
         ProjectManager.accessProject(
           ProjectManager.showProjectStorage().findIndex((project) => {
             return project.name == projectName;
-          })
-        )
+          }),
+        ),
       );
 
       addTaskBtn(
         ProjectManager.accessProject(
           ProjectManager.showProjectStorage().findIndex((project) => {
             return project.name == projectName;
-          })
-        )
+          }),
+        ),
       );
 
       addTaskListener(
         ProjectManager.accessProject(
           ProjectManager.showProjectStorage().findIndex((project) => {
             return project.name == projectName;
-          })
+          }),
         ),
         clearOldElement,
         renderTodo,
-        dialogAddTodo
+        dialogAddTodo,
       );
 
       const form = document.querySelector("form");
@@ -371,7 +371,7 @@ export const eventListeners = () => {
     renderTodo,
     addTaskBtn,
     addTaskListener,
-    dialogAddTodo
+    dialogAddTodo,
   );
 
   createProjectListener();

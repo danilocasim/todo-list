@@ -11,7 +11,7 @@ export function addTodoBtn(
   addTaskBtnCallback,
   addTaskListenerCallback,
   renderTodoCallback,
-  dialogAddTodoCallback
+  dialogAddTodoCallback,
 ) {
   clearOldElementCallback(".add-task");
   addTaskBtnCallback(project);
@@ -19,7 +19,7 @@ export function addTodoBtn(
     project,
     clearOldElementCallback,
     renderTodoCallback,
-    dialogAddTodoCallback
+    dialogAddTodoCallback,
   );
 }
 
@@ -31,13 +31,13 @@ export function addDefaultProject(
   renderTodoCallback,
   addTaskBtnCallback,
   addTaskListenerCallback,
-  dialogAddTodoCallback
+  dialogAddTodoCallback,
 ) {
   if (
     !ProjectManagerClass.accessProject(
       ProjectManagerClass.showProjectStorage().findIndex((project) => {
         return project.name == "Default";
-      })
+      }),
     )
   ) {
     ProjectManagerClass.addProject("Default");
@@ -45,7 +45,7 @@ export function addDefaultProject(
 
   renderProjectsCallback(
     ProjectManagerClass.showProjectStorage(),
-    clearOldElementCallback
+    clearOldElementCallback,
   );
 
   removeProjectListenerCallback(
@@ -53,33 +53,33 @@ export function addDefaultProject(
     renderProjectsCallback,
     clearOldElementCallback,
     renderTodoCallback,
-    addTaskBtnCallback
+    addTaskBtnCallback,
   );
 
   renderTodoCallback(
     ProjectManagerClass.accessProject(
       ProjectManagerClass.showProjectStorage().findIndex((project) => {
         return project.name == "Default";
-      })
-    )
+      }),
+    ),
   );
 
   addTaskBtnCallback(
     ProjectManagerClass.accessProject(
       ProjectManagerClass.showProjectStorage().findIndex((project) => {
         return project.name == "Default";
-      })
-    )
+      }),
+    ),
   );
 
   addTaskListenerCallback(
     ProjectManagerClass.accessProject(
       ProjectManagerClass.showProjectStorage().findIndex((project) => {
         return project.name == "Default";
-      })
+      }),
     ),
     clearOldElementCallback,
     renderTodoCallback,
-    dialogAddTodoCallback
+    dialogAddTodoCallback,
   );
 }

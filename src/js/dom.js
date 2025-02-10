@@ -44,7 +44,7 @@ export function renderProjects(projects, clearOldElementCallback) {
 export function renderTodo(project) {
   const projectTodoList = document.createElement("div");
   const projectTodoContainer = document.querySelector(
-    ".project-todo-container"
+    ".project-todo-container",
   );
 
   const projectName = document.querySelector(".project-name");
@@ -254,7 +254,7 @@ export function dialogAddTodo(
   currentTitle = "",
   currentDescription = "",
   currentDueDate = "",
-  currentPriority = ""
+  currentPriority = "",
 ) {
   const dialog = document.createElement("dialog");
 

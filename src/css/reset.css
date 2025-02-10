@@ -1,6 +1,7 @@
 @font-face {
   font-family: "montserrat";
-  src: url("../assets/fonts/montserratalternates-regular-webfont.woff2")
+  src:
+    url("../assets/fonts/montserratalternates-regular-webfont.woff2")
       format("woff2"),
     url("../assets/fonts/montserratalternates-regular-webfont.woff")
       format("woff");

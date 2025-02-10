@@ -20,14 +20,14 @@ export class Project {
 
     localStorage.setItem(
       "project-storage",
-      JSON.stringify(projectStorageWithMethods)
+      JSON.stringify(projectStorageWithMethods),
     );
   }
 
   addTodo(title, description, dueDate, priority) {
     if (localStorage.getItem("project-storage")) {
       const projectStorage = JSON.parse(
-        localStorage.getItem("project-storage")
+        localStorage.getItem("project-storage"),
       );
 
       const projectStorageWithMethods = Restore.restoreMethods(projectStorage);
@@ -39,7 +39,7 @@ export class Project {
       ].todoStorage.push(new Todo(title, description, dueDate, priority));
       localStorage.setItem(
         "project-storage",
-        JSON.stringify(projectStorageWithMethods)
+        JSON.stringify(projectStorageWithMethods),
       );
     }
   }
@@ -47,7 +47,7 @@ export class Project {
   getTodoStorage() {
     if (localStorage.getItem("project-storage")) {
       const projectStorage = JSON.parse(
-        localStorage.getItem("project-storage")
+        localStorage.getItem("project-storage"),
       );
       const projectStorageWithMethods = Restore.restoreMethods(projectStorage);
       return projectStorageWithMethods[
@@ -61,7 +61,7 @@ export class Project {
   editTodo(index, newTitle, newDescription, newDueDate, newPriority) {
     if (localStorage.getItem("project-storage")) {
       const projectStorage = JSON.parse(
-        localStorage.getItem("project-storage")
+        localStorage.getItem("project-storage"),
       );
 
       const projectStorageWithMethods = Restore.restoreMethods(projectStorage);
@@ -73,11 +73,11 @@ export class Project {
         newTitle,
         newDescription,
         newDueDate,
-        newPriority
+        newPriority,
       );
       localStorage.setItem(
         "project-storage",
-        JSON.stringify(projectStorageWithMethods)
+        JSON.stringify(projectStorageWithMethods),
       );
     }
   }
@@ -85,7 +85,7 @@ export class Project {
   isCompleteTodo(index) {
     if (localStorage.getItem("project-storage")) {
       const projectStorage = JSON.parse(
-        localStorage.getItem("project-storage")
+        localStorage.getItem("project-storage"),
       );
 
       const projectStorageWithMethods = Restore.restoreMethods(projectStorage);
@@ -97,7 +97,7 @@ export class Project {
       ].todoStorage[index].isCompleteTask();
       localStorage.setItem(
         "project-storage",
-        JSON.stringify(projectStorageWithMethods)
+        JSON.stringify(projectStorageWithMethods),
       );
     }
   }
