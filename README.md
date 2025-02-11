@@ -3,7 +3,7 @@
 ## Clone the repository
 
 ```
-git clone git@github.com:danilocasim/todo-list.git`
+git clone git@github.com:danilocasim/todo-list.git
 ```
 
 ## Install all dependencies and devDependencies
