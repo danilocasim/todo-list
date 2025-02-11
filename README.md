@@ -11,12 +11,6 @@ git clone git@github.com:danilocasim/todo-list.git
 npm install
 ```
 
-## Build it using webpack
-
-```
-npm run build
-```
-
 ### Run it in your local machine
 
 ```
