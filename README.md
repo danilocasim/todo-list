@@ -1,4 +1,3 @@
-# todo-list
 
 ## Clone the repository
 
