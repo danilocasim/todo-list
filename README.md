@@ -23,7 +23,7 @@ npm run build
 npm run dev
 ```
 
-# Future Improvements
+## Future Improvements
 
 - Filter All Task
 - Filter Today Task
